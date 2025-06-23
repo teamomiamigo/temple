@@ -1,8 +1,8 @@
-# 🛕 Temple — Mind, Body & Goals in Harmony
+# Temple — Mind, Body & Goals in Harmony
 
 A wellness companion app that treats your body, mind, and goals as a temple — unified, intentional, and thoughtfully tracked.
 
-## 🧠 Purpose
+## Purpose
 
 Temple is built to bring everything that keeps you centered — nutrition, workouts, journaling, and mindfulness — into one clean, beautiful app.
 
