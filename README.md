@@ -10,11 +10,11 @@ We often scatter our self-care across too many tools. Temple gives you a single 
 
 ## 🧩 Features
 
+- **Overview Screen**: checking what i need to do still for the day, forwarding me to any other screens and giving me some daily motivation.
 - **Nutrition**: Log meals, calories, macros, daily summaries
-- **Mind**: Daily journal, goal writing, reflection prompts
 - **Body**: Workout tracker with logging & history
-- **Temple**: Meditation timers, gratitude tracker, stress logs
-- **Weekly Review**: Summarize and reflect on your progress across all domains
+- **Temple**: Meditation screen, gratitude tracker, stress logs, daily joutnaling
+- **Running**: tracking your cardio and calories burned and progress
 
 ## 🔧 Tech Stack
 
