@@ -1,18 +1,17 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  TextInput,
-  Alert,
-  Modal,
+    Alert,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { IngredientSpecPopup } from '../components/IngredientSpecPopup';
 // import { ApiFoodItem, FoodApi } from '../services/foodApi';
-import { useNutritionStore } from '../stores/nutritionStore';
 import { getMealDisplayName, getMealEmoji, MealType } from '../utils/mealUtils';
 
 type UnifiedFoodLoggingScreenProps = {
@@ -50,8 +49,16 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
   
   // Mock data for testing
   const addMealEntry = () => console.log('Mock addMealEntry called');
-  const savedMeals: any[] = [];
-  const recentFoods: any[] = [];
+  const savedMeals: any[] = [
+    { id: 'meal1', name: 'Chicken & Rice', calories: 450, protein: 35, carbs: 40, fat: 12 },
+    { id: 'meal2', name: 'Greek Salad', calories: 280, protein: 15, carbs: 20, fat: 18 },
+  ];
+  const recentFoods: any[] = [
+    { id: 'recent1', name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+    { id: 'recent2', name: 'Brown Rice', calories: 112, protein: 2.6, carbs: 22, fat: 0.9 },
+    { id: 'recent3', name: 'Broccoli', calories: 55, protein: 3.7, carbs: 11, fat: 0.6 },
+    { id: 'recent4', name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fat: 11 },
+  ];
   const foods: any[] = [];
   
   const meals: MealType[] = ['breakfast', 'lunch', 'dinner', 'snacks'];
@@ -59,16 +66,34 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
   // Debug: Log to console to see if component is rendering
   console.log('UnifiedFoodLoggingScreen rendered');
   
-  const handleSearch = async () => {
-    if (searchQuery.trim().length < 2) return;
+  const handleSearch = async (query: string) => {
+    if (query.trim().length < 2) {
+      setSearchResults([]);
+      return;
+    }
     
     setIsSearching(true);
     try {
-      // Temporarily mock search results
-      const results = [
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Mock search results based on query
+      const allFoods = [
         { id: '1', name: 'Apple', calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
         { id: '2', name: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
+        { id: '3', name: 'Orange', calories: 62, protein: 1.2, carbs: 15.4, fat: 0.2 },
+        { id: '4', name: 'Chicken Breast', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+        { id: '5', name: 'Salmon', calories: 208, protein: 25, carbs: 0, fat: 12 },
+        { id: '6', name: 'Broccoli', calories: 55, protein: 3.7, carbs: 11, fat: 0.6 },
+        { id: '7', name: 'Brown Rice', calories: 112, protein: 2.6, carbs: 22, fat: 0.9 },
+        { id: '8', name: 'Eggs', calories: 155, protein: 13, carbs: 1.1, fat: 11 },
       ];
+      
+      // Filter foods based on search query
+      const results = allFoods.filter(food => 
+        food.name.toLowerCase().includes(query.toLowerCase())
+      );
+      
       setSearchResults(results);
     } catch (error) {
       Alert.alert('Search Error', 'Failed to search for foods. Please try again.');
@@ -76,6 +101,15 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
       setIsSearching(false);
     }
   };
+
+  // Auto-search when query changes
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      handleSearch(searchQuery);
+    }, 300); // Debounce search by 300ms
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
   
   const handleFoodSelect = (food: any) => {
     setSelectedFood(food);
@@ -152,7 +186,13 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
   const getDisplayFoods = () => {
     switch (activeTab) {
       case 'all':
-        return [...searchResults, ...recentFoods];
+        // If there's a search query, show search results
+        // If no search query, show recent foods
+        if (searchQuery.trim().length > 0) {
+          return searchResults;
+        } else {
+          return recentFoods;
+        }
       case 'myMeals':
         return savedMeals;
       case 'myRecipes':
@@ -242,7 +282,6 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
               placeholderTextColor="#666"
               value={searchQuery}
               onChangeText={setSearchQuery}
-              onSubmitEditing={handleSearch}
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearButton}>
@@ -348,7 +387,7 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
           {getDisplayFoods().length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyStateText}>
-                {activeTab === 'all' ? 'Search for foods to get started' :
+                {activeTab === 'all' ? (searchQuery.trim().length > 0 ? 'No foods found' : 'Start typing to search for foods') :
                  activeTab === 'myMeals' ? 'No saved meals yet' :
                  activeTab === 'myRecipes' ? 'No recipes yet' : 'No custom foods yet'}
               </Text>
