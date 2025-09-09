@@ -486,6 +486,8 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#fff',
     fontSize: 16,
+    outlineStyle: 'none', // Remove blue focus border on web
+    borderWidth: 0, // Remove any border
   },
   clearButton: {
     padding: 4,
