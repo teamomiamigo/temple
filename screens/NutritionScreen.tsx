@@ -2,6 +2,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AnimatedPlusButton } from '../components/AnimatedPlusButton';
+import { WaterIntakeChart } from '../components/WaterIntakeChart';
+import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
 import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange, isCurrentMealTime } from '../utils/mealUtils';
 
@@ -128,6 +130,12 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
             </View>
           ))}
         </View>
+
+        {/* Water Intake Widget */}
+        <WaterIntakeWidget />
+
+        {/* Water Intake Chart */}
+        <WaterIntakeChart />
       </ScrollView>
 
       {/* Animated Plus Button */}
