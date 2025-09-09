@@ -15,6 +15,8 @@ import { NutritionScreen } from '../screens/NutritionScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
 import { TempleScreen } from '../screens/TempleScreen';
+import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
+import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 
 const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();
@@ -33,6 +35,7 @@ const NutritionStackNavigator = () => {
   return (
     <NutritionStack.Navigator screenOptions={{ headerShown: false }}>
       <NutritionStack.Screen name="NutritionMain" component={NutritionScreen} />
+      <NutritionStack.Screen name="UnifiedFoodLogging" component={UnifiedFoodLoggingScreen} />
       <NutritionStack.Screen name="LogSelection" component={LogSelectionScreen} />
       <NutritionStack.Screen name="LogMeal" component={LogMealScreen} />
       <NutritionStack.Screen name="LogItem" component={LogItemScreen} />
