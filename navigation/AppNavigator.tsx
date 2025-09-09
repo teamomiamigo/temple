@@ -16,6 +16,7 @@ import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
+import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 
 const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();

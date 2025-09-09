@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
   Modal,
 } from 'react-native';
 import { IngredientSpecPopup } from '../components/IngredientSpecPopup';
-import { ApiFoodItem, FoodApi } from '../services/foodApi';
+// import { ApiFoodItem, FoodApi } from '../services/foodApi';
 import { useNutritionStore } from '../stores/nutritionStore';
 import { getMealDisplayName, getMealEmoji, MealType } from '../utils/mealUtils';
 
@@ -21,7 +21,7 @@ type UnifiedFoodLoggingScreenProps = {
 
 interface MealItem {
   id: string;
-  food: ApiFoodItem;
+  food: any; // Temporarily use any instead of ApiFoodItem
   quantity: number;
   calories: number;
   protein: number;
@@ -34,27 +34,41 @@ type TabType = 'all' | 'myMeals' | 'myRecipes' | 'myFoods';
 export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScreenProps) => {
   const [selectedMeal, setSelectedMeal] = useState<MealType>('breakfast');
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<ApiFoodItem[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [mealItems, setMealItems] = useState<MealItem[]>([]);
-  const [selectedFood, setSelectedFood] = useState<ApiFoodItem | null>(null);
+  const [selectedFood, setSelectedFood] = useState<any | null>(null);
   const [showIngredientPopup, setShowIngredientPopup] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [showMealSelector, setShowMealSelector] = useState(false);
   
-  const addMealEntry = useNutritionStore((state) => state.addMealEntry);
-  const savedMeals = useNutritionStore((state) => state.savedMeals);
-  const recentFoods = useNutritionStore((state) => state.getRecentFoods());
-  const foods = useNutritionStore((state) => state.foods);
+  // Temporarily comment out store usage to test
+  // const addMealEntry = useNutritionStore((state) => state.addMealEntry);
+  // const savedMeals = useNutritionStore((state) => state.savedMeals);
+  // const recentFoods = useNutritionStore((state) => state.getRecentFoods());
+  // const foods = useNutritionStore((state) => state.foods);
+  
+  // Mock data for testing
+  const addMealEntry = () => console.log('Mock addMealEntry called');
+  const savedMeals: any[] = [];
+  const recentFoods: any[] = [];
+  const foods: any[] = [];
   
   const meals: MealType[] = ['breakfast', 'lunch', 'dinner', 'snacks'];
+
+  // Debug: Log to console to see if component is rendering
+  console.log('UnifiedFoodLoggingScreen rendered');
   
   const handleSearch = async () => {
     if (searchQuery.trim().length < 2) return;
     
     setIsSearching(true);
     try {
-      const results = await FoodApi.searchFoods(searchQuery);
+      // Temporarily mock search results
+      const results = [
+        { id: '1', name: 'Apple', calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
+        { id: '2', name: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
+      ];
       setSearchResults(results);
     } catch (error) {
       Alert.alert('Search Error', 'Failed to search for foods. Please try again.');
@@ -63,12 +77,12 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
     }
   };
   
-  const handleFoodSelect = (food: ApiFoodItem) => {
+  const handleFoodSelect = (food: any) => {
     setSelectedFood(food);
     setShowIngredientPopup(true);
   };
 
-  const handleIngredientConfirm = (food: ApiFoodItem, quantity: number, servingType: 'servings' | 'grams') => {
+  const handleIngredientConfirm = (food: any, quantity: number, servingType: 'servings' | 'grams') => {
     let finalQuantity = quantity;
     let servingSize = food.servingSize;
     
