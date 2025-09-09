@@ -24,12 +24,8 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   // Get current meal based on time
   const currentMeal = getMealByTime();
   
-  const handleLogMeal = () => {
-    navigation.navigate('LogMeal', { mealName: currentMeal });
-  };
-  
-  const handleLogItem = () => {
-    navigation.navigate('LogItem', { mealName: currentMeal });
+  const handleLogFood = () => {
+    navigation.navigate('UnifiedFoodLogging');
   };
   
   const handleViewSavedMeals = () => {
@@ -139,7 +135,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
       </ScrollView>
 
       {/* Animated Plus Button */}
-      <AnimatedPlusButton onLogMeal={handleLogMeal} onLogItem={handleLogItem} />
+      <AnimatedPlusButton onLogFood={handleLogFood} />
     </View>
   );
 };
