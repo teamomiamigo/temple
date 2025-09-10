@@ -16,7 +16,7 @@ import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
-import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
+import { WeightTrackingScreen } from '../screens/WeightTrackingScreen';
 
 const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();
@@ -42,6 +42,7 @@ const NutritionStackNavigator = () => {
       <NutritionStack.Screen name="AddMeal" component={AddMealScreen} />
       <NutritionStack.Screen name="QuickLog" component={QuickLogScreen} />
       <NutritionStack.Screen name="SavedMeals" component={SavedMealsScreen} />
+      <NutritionStack.Screen name="WeightTracking" component={WeightTrackingScreen} />
     </NutritionStack.Navigator>
   );
 };
