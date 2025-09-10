@@ -1,7 +1,8 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AnimatedPlusButton } from '../components/AnimatedPlusButton';
+import { IOSTile } from '../components/IOSTile';
 import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
@@ -55,7 +56,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
         <Text style={styles.pageTitle}>Let's Eat Healthy.</Text>
 
         {/* Calories summary card */}
-        <View style={styles.caloriesCard}>
+        <IOSTile style={styles.caloriesCard} onPress={() => {}}>
           <View>
             <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
             <Text style={styles.caloriesLabel}>Calories left</Text>
@@ -64,26 +65,26 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
             {/* A flame emoji as placeholder icon */}
             <Text style={styles.flameIcon}>🔥</Text>
           </View>
-        </View>
+        </IOSTile>
 
         {/* Macro cards */}
         <View style={styles.macroRow}>
-          <View style={styles.macroCard}>
+          <IOSTile style={styles.macroCard} onPress={() => {}}>
             <Text style={styles.macroValue}>{proteinLeft}g</Text>
             <Text style={styles.macroLabel}>Protein left</Text>
-          </View>
-          <View style={styles.macroCard}>
+          </IOSTile>
+          <IOSTile style={styles.macroCard} onPress={() => {}}>
             <Text style={styles.macroValue}>{carbsLeft}g</Text>
             <Text style={styles.macroLabel}>Carbs left</Text>
-          </View>
-          <View style={styles.macroCard}>
+          </IOSTile>
+          <IOSTile style={styles.macroCard} onPress={() => {}}>
             <Text style={styles.macroValue}>{fatLeft}g</Text>
             <Text style={styles.macroLabel}>Fat left</Text>
-          </View>
+          </IOSTile>
         </View>
 
         {/* Current Meal Section */}
-        <View style={styles.currentMealSection}>
+        <IOSTile style={styles.currentMealSection} onPress={() => {}}>
           <View style={styles.currentMealHeader}>
             <Text style={styles.currentMealEmoji}>{getMealEmoji(currentMeal)}</Text>
             <View style={styles.currentMealInfo}>
@@ -110,25 +111,25 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
               )}
             </View>
           )}
-        </View>
+        </IOSTile>
         
         {/* Today's Summary */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Today's Summary</Text>
-          <TouchableOpacity onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
+          <IOSTile onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
             <Text style={styles.savedMealsButtonText}>📚 Saved Meals</Text>
-          </TouchableOpacity>
+          </IOSTile>
         </View>
         
         {/* Meal Overview */}
         <View style={styles.mealsOverview}>
           {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal) => (
-            <View key={meal} style={styles.mealOverviewCard}>
+            <IOSTile key={meal} style={styles.mealOverviewCard} onPress={() => {}}>
               <Text style={styles.mealOverviewEmoji}>{getMealEmoji(meal)}</Text>
               <Text style={styles.mealOverviewName}>{getMealDisplayName(meal)}</Text>
               <Text style={styles.mealOverviewCalories}>{getMealCalories(meal)} cal</Text>
               <Text style={styles.mealOverviewItems}>{getMealItems(meal).length} items</Text>
-            </View>
+            </IOSTile>
           ))}
         </View>
 

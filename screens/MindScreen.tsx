@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Animated, Dimensions, Easing, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
+import { IOSTile } from '../components/IOSTile';
 
 const { width } = Dimensions.get('window');
 const RING_SIZE = width * 0.7;
@@ -52,16 +53,20 @@ export const MindScreen = () => {
       <ScrollView contentContainerStyle={styles.container}>
         {/* Top bar */}
         <View style={styles.topBar}>
-          <TouchableOpacity style={styles.iconButton}>
+          <IOSTile style={styles.iconButton} onPress={() => {}}>
             <Text style={styles.iconHex}>⬡</Text>
-          </TouchableOpacity>
+          </IOSTile>
           <View style={styles.badgesRow}>
-            <View style={styles.badge}><Text style={styles.badgeText}>{emotionsCount} emotions</Text></View>
-            <View style={styles.badge}><Text style={styles.badgeText}>{streak} day streak</Text></View>
+            <IOSTile style={styles.badge} onPress={() => {}}>
+              <Text style={styles.badgeText}>{emotionsCount} emotions</Text>
+            </IOSTile>
+            <IOSTile style={styles.badge} onPress={() => {}}>
+              <Text style={styles.badgeText}>{streak} day streak</Text>
+            </IOSTile>
           </View>
-          <TouchableOpacity style={styles.iconButton}>
+          <IOSTile style={styles.iconButton} onPress={() => {}}>
             <Text style={styles.iconHeart}>♡</Text>
-          </TouchableOpacity>
+          </IOSTile>
         </View>
 
         {/* Prompt */}
@@ -101,14 +106,15 @@ export const MindScreen = () => {
                 </LinearGradient>
               </Defs>
             </Svg>
-            <TouchableOpacity
+            <IOSTile
               style={styles.checkInButton}
-              activeOpacity={0.8}
               onPress={handleCheckIn}
+              scaleValue={0.95}
+              duration={200}
             >
               <Text style={styles.checkInPlus}>＋</Text>
               <Text style={styles.checkInText}>Check in</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
         </View>
 
@@ -120,22 +126,22 @@ export const MindScreen = () => {
       <View style={styles.bottomCard}>
         <Text style={styles.bottomCardText}>{checkIns} check-ins</Text>
         <View style={styles.bottomNavRow}>
-          <TouchableOpacity style={styles.bottomNavItemActive}>
+          <IOSTile style={styles.bottomNavItemActive} onPress={() => {}}>
             <Text style={styles.bottomNavIcon}>＋</Text>
             <Text style={styles.bottomNavLabelActive}>Check in</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomNavItem}>
+          </IOSTile>
+          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
             <Text style={styles.bottomNavIcon}>🛠️</Text>
             <Text style={styles.bottomNavLabel}>Tools</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomNavItem}>
+          </IOSTile>
+          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
             <Text style={styles.bottomNavIcon}>👥</Text>
             <Text style={styles.bottomNavLabel}>Friends</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomNavItem}>
+          </IOSTile>
+          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
             <Text style={styles.bottomNavIcon}>📊</Text>
             <Text style={styles.bottomNavLabel}>Analyze</Text>
-          </TouchableOpacity>
+          </IOSTile>
         </View>
       </View>
     </View>
