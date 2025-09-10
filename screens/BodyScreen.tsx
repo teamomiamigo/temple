@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
-import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { IOSTile } from '../components/IOSTile';
 import { Template, useTemplateStore } from '../stores/templateStore';
 
 type BodyScreenProps = {
@@ -8,36 +9,14 @@ type BodyScreenProps = {
 };
 
 export const BodyScreen = ({ navigation }: BodyScreenProps) => {
-  const [templateScale] = useState(new Animated.Value(1));
-  const [workoutScale] = useState(new Animated.Value(1));
-  
   const templates      = useTemplateStore(state => state.templates);
   const addTemplate    = useTemplateStore(state => state.addTemplate);
   const updateTemplate = useTemplateStore(state => state.updateTemplate);
 
-  const handleTemplatePress = (pressed: boolean) => {
-    Animated.spring(templateScale, {
-      toValue: pressed ? 0.95 : 1,
-      useNativeDriver: true,
-    }).start();
-    
-    if (!pressed) {
-      // Navigate to BuildTemplateScreen when released
-      navigation.navigate('BuildTemplate');
-    }
-  };
-
-  const handleWorkoutPress = (pressed: boolean) => {
-    Animated.spring(workoutScale, {
-      toValue: pressed ? 0.95 : 1,
-      useNativeDriver: true,
-    }).start();
-  };
-
   const renderTemplateCard = (template: Template) => {
     return (
-      <TouchableOpacity 
-        key={template.id} 
+      <IOSTile
+        key={template.id}
         style={styles.templateCard}
         onPress={() => {
           // Navigate to BuildTemplateScreen with the template data for editing
@@ -48,7 +27,7 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <Text style={styles.templateCardDetails}>
           {template.exercises.length} exercise{template.exercises.length !== 1 ? 's' : ''}
         </Text>
-      </TouchableOpacity>
+      </IOSTile>
     );
   };
 
@@ -60,32 +39,31 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
         <Text style={styles.title}>Let's Workout.</Text>
-        <TouchableOpacity style={styles.beginButton}>
+        <IOSTile style={styles.beginButton} onPress={() => {}}>
           <Text style={styles.beginButtonText}>Begin</Text>
-        </TouchableOpacity>
+        </IOSTile>
         <View style={styles.templatesHeaderRow}>
           <Text style={styles.templatesTitle}>Templates</Text>
           <View style={styles.templatesActions}>
-            <TouchableOpacity 
+            <IOSTile 
               style={styles.templateButton}
               onPress={handleAddTemplatePress}
             >
               <Text style={styles.templateButtonText}>+ Template</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.moreButton}>
+            </IOSTile>
+            <IOSTile style={styles.moreButton} onPress={() => {}}>
               <Text style={styles.moreButtonText}>...</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
         </View>
 
         {templates.length === 0 ? (
-          <Animated.View 
-            style={[styles.addTemplateCard, { transform: [{ scale: templateScale }] }]}
-            onTouchStart={() => handleTemplatePress(true)}
-            onTouchEnd={() => handleTemplatePress(false)}
+          <IOSTile 
+            style={styles.addTemplateCard}
+            onPress={() => navigation.navigate('BuildTemplate')}
           >
             <Text style={styles.addTemplateCardText}>add a template:</Text>
-          </Animated.View>
+          </IOSTile>
         ) : (
           <View style={styles.templatesGrid}>
             {templates.map(renderTemplateCard)}
@@ -95,22 +73,21 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <View style={styles.pastWorkoutsHeaderRow}>
           <Text style={styles.pastWorkoutsTitle}>Past Workouts</Text>
           <View style={styles.pastWorkoutsActions}>
-            <TouchableOpacity style={styles.workoutButton}>
+            <IOSTile style={styles.workoutButton} onPress={() => {}}>
               <Text style={styles.workoutButtonText}>+ Workout</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.moreButton}>
+            </IOSTile>
+            <IOSTile style={styles.moreButton} onPress={() => {}}>
               <Text style={styles.moreButtonText}>...</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
         </View>
 
-        <Animated.View 
-          style={[styles.addWorkoutCard, { transform: [{ scale: workoutScale }] }]}
-          onTouchStart={() => handleWorkoutPress(true)}
-          onTouchEnd={() => handleWorkoutPress(false)}
+        <IOSTile 
+          style={styles.addWorkoutCard}
+          onPress={() => {}}
         >
           <Text style={styles.addWorkoutCardText}>add a workout</Text>
-        </Animated.View>
+        </IOSTile>
       </View>
     </ScrollView>
   );
