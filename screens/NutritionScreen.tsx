@@ -4,6 +4,7 @@ import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from
 import { AnimatedPlusButton } from '../components/AnimatedPlusButton';
 import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
+import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
 import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange, isCurrentMealTime } from '../utils/mealUtils';
 
@@ -30,6 +31,10 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   
   const handleViewSavedMeals = () => {
     navigation.navigate('SavedMeals');
+  };
+
+  const handleWeightTrackingPress = () => {
+    navigation.navigate('WeightTracking');
   };
   
   const getMealCalories = (mealName: string) => {
@@ -132,6 +137,9 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
 
         {/* Water Intake Chart */}
         <WaterIntakeChart />
+
+        {/* Weight Tracking Widget */}
+        <WeightTrackingWidget onPress={handleWeightTrackingPress} />
       </ScrollView>
 
       {/* Animated Plus Button */}
