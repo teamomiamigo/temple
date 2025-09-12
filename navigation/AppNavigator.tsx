@@ -10,17 +10,20 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { LogItemScreen } from '../screens/LogItemScreen';
 import { LogMealScreen } from '../screens/LogMealScreen';
 import { LogSelectionScreen } from '../screens/LogSelectionScreen';
+import { MeditationPlayerScreen } from '../screens/MeditationPlayerScreen';
+import { MeditationTopicScreen } from '../screens/MeditationTopicScreen';
 import { MindScreen } from '../screens/MindScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
+import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
-import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 
 const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();
 const NutritionStack = createNativeStackNavigator();
+const TempleStack = createNativeStackNavigator();
 
 const BodyStackNavigator = () => {
   return (
@@ -43,6 +46,16 @@ const NutritionStackNavigator = () => {
       <NutritionStack.Screen name="QuickLog" component={QuickLogScreen} />
       <NutritionStack.Screen name="SavedMeals" component={SavedMealsScreen} />
     </NutritionStack.Navigator>
+  );
+};
+
+const TempleStackNavigator = () => {
+  return (
+    <TempleStack.Navigator screenOptions={{ headerShown: false }}>
+      <TempleStack.Screen name="TempleMain" component={TempleScreen} />
+      <TempleStack.Screen name="MeditationTopic" component={MeditationTopicScreen} />
+      <TempleStack.Screen name="MeditationPlayer" component={MeditationPlayerScreen} />
+    </TempleStack.Navigator>
   );
 };
 
@@ -90,7 +103,7 @@ export const AppNavigator = () => {
         />
         <Tab.Screen 
           name="Temple" 
-          component={TempleScreen}
+          component={TempleStackNavigator}
           options={{
             tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
           }}
