@@ -17,6 +17,8 @@ import { MindScreen } from '../screens/MindScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
 import { PromptsScreen } from '../screens/PromptsScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
+import { QuickWorkoutScreen } from '../screens/QuickWorkoutScreen';
+import { RunLoggingScreen } from '../screens/RunLoggingScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
 import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 import { TempleScreen } from '../screens/TempleScreen';
@@ -34,6 +36,8 @@ const BodyStackNavigator = () => {
     <BodyStack.Navigator screenOptions={{ headerShown: false }}>
       <BodyStack.Screen name="BodyMain" component={BodyScreen} />
       <BodyStack.Screen name="BuildTemplate" component={BuildTemplateScreen} />
+      <BodyStack.Screen name="QuickWorkout" component={QuickWorkoutScreen} />
+      <BodyStack.Screen name="RunLogging" component={RunLoggingScreen} />
     </BodyStack.Navigator>
   );
 };
