@@ -109,7 +109,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
         </View>
 
         {/* Today's Summary Box */}
-        <View style={styles.todaySummaryContainer}>
+        <IOSTile style={styles.todaySummaryBox} onPress={() => {}}>
           <View style={styles.summaryHeader}>
             <Text style={styles.sectionTitle}>Today's Summary</Text>
             <IOSTile onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
@@ -117,32 +117,30 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
             </IOSTile>
           </View>
           
-          <IOSTile style={styles.summaryBox} onPress={() => {}}>
-            <View style={styles.summaryGrid}>
-              {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal, index) => (
-                <View key={meal} style={[styles.summarySection, index < 2 && styles.summarySectionBorderBottom]}>
-                  <View style={styles.summaryMealHeader}>
-                    <Text style={styles.summaryMealEmoji}>{getMealEmoji(meal)}</Text>
-                    <View style={styles.summaryMealInfo}>
-                      <Text style={styles.summaryMealName}>{getMealDisplayName(meal)}</Text>
-                      <Text style={styles.summaryMealTime}>{getMealTimeRange(meal)}</Text>
-                    </View>
+          <View style={styles.summaryGrid}>
+            {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal, index) => (
+              <View key={meal} style={[styles.summarySection, index < 2 && styles.summarySectionBorderBottom]}>
+                <View style={styles.summaryMealHeader}>
+                  <Text style={styles.summaryMealEmoji}>{getMealEmoji(meal)}</Text>
+                  <View style={styles.summaryMealInfo}>
+                    <Text style={styles.summaryMealName}>{getMealDisplayName(meal)}</Text>
+                    <Text style={styles.summaryMealTime}>{getMealTimeRange(meal)}</Text>
                   </View>
-                  <View style={styles.summaryMealStats}>
-                    <Text style={styles.summaryMealCalories}>{getMealCalories(meal)}</Text>
-                    <Text style={styles.summaryMealCaloriesLabel}>cal</Text>
-                    <Text style={styles.summaryMealItems}>{getMealItems(meal).length} items</Text>
-                  </View>
-                  {getMealItems(meal).length > 0 && (
-                    <View style={styles.summaryMealProgress}>
-                      <View style={[styles.summaryMealProgressBar, { width: `${Math.min(100, (getMealCalories(meal) / 500) * 100)}%` }]} />
-                    </View>
-                  )}
                 </View>
-              ))}
-            </View>
-          </IOSTile>
-        </View>
+                <View style={styles.summaryMealStats}>
+                  <Text style={styles.summaryMealCalories}>{getMealCalories(meal)}</Text>
+                  <Text style={styles.summaryMealCaloriesLabel}>cal</Text>
+                  <Text style={styles.summaryMealItems}>{getMealItems(meal).length} items</Text>
+                </View>
+                {getMealItems(meal).length > 0 && (
+                  <View style={styles.summaryMealProgress}>
+                    <View style={[styles.summaryMealProgressBar, { width: `${Math.min(100, (getMealCalories(meal) / 500) * 100)}%` }]} />
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
+        </IOSTile>
 
         {/* Water Intake Widget */}
         <WaterIntakeWidget />
@@ -327,24 +325,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  todaySummaryContainer: {
+  todaySummaryBox: {
+    backgroundColor: '#111',
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   summaryHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  summaryBox: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
   },
   summaryGrid: {
     flexDirection: 'row',
