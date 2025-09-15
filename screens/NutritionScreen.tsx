@@ -9,6 +9,7 @@ import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
+import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange } from '../utils/mealUtils';
 
 type NutritionScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -64,46 +65,40 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
 
   return (
     <View style={styles.screen}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Text style={styles.pageTitle}>Let's Eat Healthy.</Text>
 
-        {/* Test - Simple View First */}
-        <View style={{ backgroundColor: '#111', padding: 20, borderRadius: 16, marginBottom: 20 }}>
-          <Text style={{ color: '#fff', fontSize: 24 }}>Test Card</Text>
-          <Text style={{ color: '#999', fontSize: 16 }}>Calories Left: {caloriesLeft}</Text>
-        </View>
-
-        {/* Calories Card - Temporarily commented out */}
-        {/* <CaloriesCard
+        {/* Calories Card */}
+        <CaloriesCard 
           caloriesLeft={caloriesLeft}
           goal={goals.calories}
           consumed={consumed.calories}
-        /> */}
+        />
 
-        {/* Macro Cards - Temporarily commented out */}
-        {/* <MacroCards 
+        {/* Macro Cards */}
+        <MacroCards 
           goals={goals}
           consumed={consumed}
-        /> */}
+        />
 
-        {/* Today's Summary - Temporarily commented out */}
-        {/* <TodaySummary 
+        {/* Today's Summary */}
+        <TodaySummary 
           meals={meals}
           onViewSavedMeals={handleViewSavedMeals}
-        /> */}
+        />
 
-        {/* Water Intake Widget - Temporarily commented out */}
-        {/* <WaterIntakeWidget /> */}
+        {/* Water Intake Widget */}
+        <WaterIntakeWidget />
 
-        {/* Water Intake Chart - Temporarily commented out */}
-        {/* <WaterIntakeChart /> */}
+        {/* Water Intake Chart */}
+        <WaterIntakeChart />
 
-        {/* Weight Tracking Widget - Temporarily commented out */}
-        {/* <WeightTrackingWidget onPress={handleWeightTrackingPress} /> */}
+        {/* Weight Tracking Widget */}
+        <WeightTrackingWidget onPress={handleWeightTrackingPress} />
       </ScrollView>
 
-      {/* Animated Plus Button - Temporarily commented out */}
-      {/* <AnimatedPlusButton onLogFood={handleLogFood} /> */}
+      {/* Animated Plus Button */}
+      <AnimatedPlusButton onLogFood={handleLogFood} />
     </View>
   );
 };
@@ -111,17 +106,19 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: '#000',
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
     paddingHorizontal: 16,
     paddingTop: 60,
+    paddingBottom: 100,
   },
   pageTitle: {
     color: '#fff',
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 24,
+    letterSpacing: -0.5,
   },
-}); 
+});

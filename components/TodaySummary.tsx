@@ -1,27 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { IOSTile } from './IOSTile';
 import { getMealDisplayName, getMealEmoji, getMealTimeRange } from '../utils/mealUtils';
 
-interface Meal {
+type MealSummary = {
   name: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
   calories: number;
   items: number;
-}
+};
 
-interface TodaySummaryProps {
-  meals: Meal[];
-  onViewSavedMeals?: () => void;
-  onPress?: () => void;
-}
+type TodaySummaryProps = {
+  meals: MealSummary[];
+  onViewSavedMeals: () => void;
+};
 
-export const TodaySummary: React.FC<TodaySummaryProps> = ({
-  meals,
-  onViewSavedMeals,
-  onPress
-}) => {
+export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => {
   return (
-    <IOSTile style={styles.todaySummaryBox} onPress={onPress}>
+    <IOSTile style={styles.todaySummaryBox} onPress={() => {}}>
       <View style={styles.summaryHeader}>
         <Text style={styles.sectionTitle}>Today's Summary</Text>
         <IOSTile onPress={onViewSavedMeals} style={styles.savedMealsButton}>
@@ -58,36 +53,44 @@ export const TodaySummary: React.FC<TodaySummaryProps> = ({
 
 const styles = StyleSheet.create({
   todaySummaryBox: {
-    backgroundColor: '#111',
-    borderRadius: 16,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 20,
     padding: 20,
-    marginBottom: 24,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowRadius: 16,
     elevation: 8,
   },
   summaryHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   sectionTitle: {
     color: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
+    letterSpacing: -0.5,
   },
   savedMealsButton: {
-    backgroundColor: '#ff6b35',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    backgroundColor: '#FF6B35',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    shadowColor: '#FF6B35',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   savedMealsButtonText: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
   },
   summaryGrid: {
@@ -101,29 +104,31 @@ const styles = StyleSheet.create({
   },
   summarySectionBorderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: '#333',
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   summaryMealHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
   },
   summaryMealEmoji: {
     fontSize: 20,
-    marginRight: 8,
+    marginRight: 12,
   },
   summaryMealInfo: {
     flex: 1,
   },
   summaryMealName: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     marginBottom: 2,
+    letterSpacing: -0.3,
   },
   summaryMealTime: {
-    color: '#666',
-    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 12,
+    fontWeight: '500',
   },
   summaryMealStats: {
     flexDirection: 'row',
@@ -135,19 +140,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginRight: 4,
+    letterSpacing: -0.3,
   },
   summaryMealCaloriesLabel: {
-    color: '#666',
-    fontSize: 10,
-    marginRight: 8,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 12,
+    marginRight: 12,
+    fontWeight: '500',
   },
   summaryMealItems: {
-    color: '#666',
-    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 12,
+    fontWeight: '500',
   },
   summaryMealProgress: {
     height: 3,
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: 2,
     overflow: 'hidden',
   },

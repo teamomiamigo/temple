@@ -1,30 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { IOSTile } from './IOSTile';
 
-interface CaloriesCardProps {
+type CaloriesCardProps = {
   caloriesLeft: number;
   goal: number;
   consumed: number;
-  onPress?: () => void;
-}
+};
 
-export const CaloriesCard: React.FC<CaloriesCardProps> = ({
-  caloriesLeft,
-  goal,
-  consumed,
-  onPress
-}) => {
-  const progressPercentage = Math.min(100, (consumed / goal) * 100);
+export const CaloriesCard = ({ caloriesLeft, goal, consumed }: CaloriesCardProps) => {
+  const progressWidth = Math.min(100, (consumed / goal) * 100);
 
   return (
-    <IOSTile style={styles.caloriesCard} onPress={onPress}>
+    <IOSTile style={styles.caloriesCard} onPress={() => {}}>
       <View style={styles.caloriesContent}>
         <View style={styles.caloriesLeft}>
           <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
           <Text style={styles.caloriesLabel}>calories left</Text>
           <View style={styles.caloriesProgress}>
-            <View style={[styles.caloriesProgressBar, { width: `${progressPercentage}%` }]} />
+            <View style={[styles.caloriesProgressBar, { width: `${progressWidth}%` }]} />
           </View>
         </View>
         <View style={styles.caloriesRight}>
@@ -40,14 +34,16 @@ export const CaloriesCard: React.FC<CaloriesCardProps> = ({
 
 const styles = StyleSheet.create({
   caloriesCard: {
-    backgroundColor: '#111',
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
     borderRadius: 20,
     padding: 24,
-    marginBottom: 24,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowRadius: 16,
     elevation: 8,
   },
   caloriesContent: {
@@ -63,15 +59,17 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: '800',
     marginBottom: 4,
+    letterSpacing: -1,
   },
   caloriesLabel: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 16,
+    fontWeight: '500',
   },
   caloriesProgress: {
     height: 6,
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: 3,
     overflow: 'hidden',
   },
@@ -91,13 +89,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
+    shadowColor: '#FF6B35',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   caloriesIcon: {
     fontSize: 32,
   },
   caloriesGoal: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '600',
   },
 });
