@@ -7,6 +7,7 @@ import { AddMealScreen } from '../screens/AddMealScreen';
 import { BodyScreen } from '../screens/BodyScreen';
 import { BuildTemplateScreen } from '../screens/BuildTemplateScreen';
 import { HomeScreen } from '../screens/HomeScreen';
+import { JournalEntryScreen } from '../screens/JournalEntryScreen';
 import { LogItemScreen } from '../screens/LogItemScreen';
 import { LogMealScreen } from '../screens/LogMealScreen';
 import { LogSelectionScreen } from '../screens/LogSelectionScreen';
@@ -14,6 +15,7 @@ import { MeditationPlayerScreen } from '../screens/MeditationPlayerScreen';
 import { MeditationTopicScreen } from '../screens/MeditationTopicScreen';
 import { MindScreen } from '../screens/MindScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
+import { PromptsScreen } from '../screens/PromptsScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
 import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
@@ -24,6 +26,7 @@ import { WeightTrackingScreen } from '../screens/WeightTrackingScreen';
 const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();
 const NutritionStack = createNativeStackNavigator();
+const MindStack = createNativeStackNavigator();
 const TempleStack = createNativeStackNavigator();
 
 const BodyStackNavigator = () => {
@@ -48,6 +51,16 @@ const NutritionStackNavigator = () => {
       <NutritionStack.Screen name="SavedMeals" component={SavedMealsScreen} />
       <NutritionStack.Screen name="WeightTracking" component={WeightTrackingScreen} />
     </NutritionStack.Navigator>
+  );
+};
+
+const MindStackNavigator = () => {
+  return (
+    <MindStack.Navigator screenOptions={{ headerShown: false }}>
+      <MindStack.Screen name="MindMain" component={MindScreen} />
+      <MindStack.Screen name="JournalEntry" component={JournalEntryScreen} />
+      <MindStack.Screen name="Prompts" component={PromptsScreen} />
+    </MindStack.Navigator>
   );
 };
 
@@ -91,7 +104,7 @@ export const AppNavigator = () => {
         />
         <Tab.Screen 
           name="Mind" 
-          component={MindScreen}
+          component={MindStackNavigator}
           options={{
             tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🧠</Text>,
           }}
