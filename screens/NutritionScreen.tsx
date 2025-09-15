@@ -108,71 +108,54 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
           </IOSTile>
         </View>
 
-        {/* Current Meal Section */}
-        <IOSTile style={styles.currentMealSection} onPress={() => {}}>
-          <View style={styles.currentMealHeader}>
-            <Text style={styles.currentMealEmoji}>{getMealEmoji(currentMeal)}</Text>
-            <View style={styles.currentMealInfo}>
-              <Text style={styles.currentMealTitle}>
-                {isCurrentMealTime(currentMeal) ? 'Current Meal' : 'Next Meal'}
-              </Text>
-              <Text style={styles.currentMealName}>{getMealDisplayName(currentMeal)}</Text>
-              <Text style={styles.currentMealTime}>{getMealTimeRange(currentMeal)}</Text>
+        {/* Current Meal Corner Tile */}
+        <View style={styles.currentMealContainer}>
+          <IOSTile style={styles.currentMealTile} onPress={() => {}}>
+            <View style={styles.currentMealContent}>
+              <Text style={styles.currentMealEmoji}>{getMealEmoji(currentMeal)}</Text>
+              <View style={styles.currentMealInfo}>
+                <Text style={styles.currentMealName}>{getMealDisplayName(currentMeal)}</Text>
+                <Text style={styles.currentMealTime}>{getMealTimeRange(currentMeal)}</Text>
+                <Text style={styles.currentMealCalories}>{getMealCalories(currentMeal)} cal</Text>
+              </View>
             </View>
-            <Text style={styles.currentMealCalories}>{getMealCalories(currentMeal)} cal</Text>
-          </View>
-          
-          {getMealItems(currentMeal).length > 0 && (
-            <View style={styles.currentMealItems}>
-              {getMealItems(currentMeal).slice(0, 3).map((item, index) => (
-                <Text key={index} style={styles.currentMealItem}>
-                  • {item.foodName} ({item.calories} cal)
-                </Text>
-              ))}
-              {getMealItems(currentMeal).length > 3 && (
-                <Text style={styles.currentMealItem}>
-                  +{getMealItems(currentMeal).length - 3} more items
-                </Text>
-              )}
-            </View>
-          )}
-        </IOSTile>
-        
-        {/* Today's Summary */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Today's Summary</Text>
-          <IOSTile onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
-            <Text style={styles.savedMealsButtonText}>📚 Saved Meals</Text>
           </IOSTile>
         </View>
         
-        {/* Meal Overview */}
-        <View style={styles.mealsOverview}>
-          {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal) => (
-            <IOSTile key={meal} style={styles.mealOverviewCard} onPress={() => {}}>
-              <View style={styles.mealCardHeader}>
-                <View style={styles.mealIconContainer}>
-                  <Text style={styles.mealOverviewEmoji}>{getMealEmoji(meal)}</Text>
-                </View>
-                <View style={styles.mealCardInfo}>
-                  <Text style={styles.mealOverviewName}>{getMealDisplayName(meal)}</Text>
-                  <Text style={styles.mealOverviewTime}>{getMealTimeRange(meal)}</Text>
-                </View>
-                <View style={styles.mealCardStats}>
-                  <Text style={styles.mealOverviewCalories}>{getMealCalories(meal)}</Text>
-                  <Text style={styles.mealOverviewCaloriesLabel}>cal</Text>
-                </View>
-              </View>
-              <View style={styles.mealCardFooter}>
-                <Text style={styles.mealOverviewItems}>{getMealItems(meal).length} items logged</Text>
-                {getMealItems(meal).length > 0 && (
-                  <View style={styles.mealProgress}>
-                    <View style={[styles.mealProgressBar, { width: `${Math.min(100, (getMealCalories(meal) / 500) * 100)}%` }]} />
-                  </View>
-                )}
-              </View>
+        {/* Today's Summary Box */}
+        <View style={styles.todaySummaryContainer}>
+          <View style={styles.summaryHeader}>
+            <Text style={styles.sectionTitle}>Today's Summary</Text>
+            <IOSTile onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
+              <Text style={styles.savedMealsButtonText}>📚 Saved Meals</Text>
             </IOSTile>
-          ))}
+          </View>
+          
+          <IOSTile style={styles.summaryBox} onPress={() => {}}>
+            <View style={styles.summaryGrid}>
+              {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal, index) => (
+                <View key={meal} style={[styles.summarySection, index < 2 && styles.summarySectionBorderBottom]}>
+                  <View style={styles.summaryMealHeader}>
+                    <Text style={styles.summaryMealEmoji}>{getMealEmoji(meal)}</Text>
+                    <View style={styles.summaryMealInfo}>
+                      <Text style={styles.summaryMealName}>{getMealDisplayName(meal)}</Text>
+                      <Text style={styles.summaryMealTime}>{getMealTimeRange(meal)}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.summaryMealStats}>
+                    <Text style={styles.summaryMealCalories}>{getMealCalories(meal)}</Text>
+                    <Text style={styles.summaryMealCaloriesLabel}>cal</Text>
+                    <Text style={styles.summaryMealItems}>{getMealItems(meal).length} items</Text>
+                  </View>
+                  {getMealItems(meal).length > 0 && (
+                    <View style={styles.summaryMealProgress}>
+                      <View style={[styles.summaryMealProgressBar, { width: `${Math.min(100, (getMealCalories(meal) / 500) * 100)}%` }]} />
+                    </View>
+                  )}
+                </View>
+              ))}
+            </View>
+          </IOSTile>
         </View>
 
         {/* Water Intake Widget */}
@@ -358,127 +341,128 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  currentMealSection: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 20,
+  currentMealContainer: {
+    alignItems: 'flex-end',
     marginBottom: 24,
   },
-  currentMealHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  currentMealEmoji: {
-    fontSize: 32,
-    marginRight: 16,
-  },
-  currentMealInfo: {
-    flex: 1,
-  },
-  currentMealTitle: {
-    color: '#999',
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  currentMealName: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  currentMealTime: {
-    color: '#666',
-    fontSize: 12,
-  },
-  currentMealCalories: {
-    color: '#007AFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  currentMealItems: {
-    marginTop: 8,
-  },
-  currentMealItem: {
-    color: '#999',
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  mealsOverview: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  mealOverviewCard: {
+  currentMealTile: {
     backgroundColor: '#111',
     borderRadius: 16,
     padding: 16,
-    width: '48%',
-    marginBottom: 12,
+    width: 160,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
   },
-  mealCardHeader: {
+  currentMealContent: {
+    alignItems: 'center',
+  },
+  currentMealEmoji: {
+    fontSize: 24,
+    marginBottom: 8,
+  },
+  currentMealInfo: {
+    alignItems: 'center',
+  },
+  currentMealName: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  currentMealTime: {
+    color: '#666',
+    fontSize: 11,
+    marginBottom: 4,
+  },
+  currentMealCalories: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  todaySummaryContainer: {
+    marginBottom: 24,
+  },
+  summaryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  summaryBox: {
+    backgroundColor: '#111',
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  summaryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  summarySection: {
+    width: '50%',
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+  },
+  summarySectionBorderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+  },
+  summaryMealHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
-  mealIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#222',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  mealOverviewEmoji: {
+  summaryMealEmoji: {
     fontSize: 20,
+    marginRight: 8,
   },
-  mealCardInfo: {
+  summaryMealInfo: {
     flex: 1,
   },
-  mealOverviewName: {
+  summaryMealName: {
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 2,
   },
-  mealOverviewTime: {
+  summaryMealTime: {
     color: '#666',
     fontSize: 11,
   },
-  mealCardStats: {
-    alignItems: 'flex-end',
-  },
-  mealOverviewCalories: {
-    color: '#007AFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  mealOverviewCaloriesLabel: {
-    color: '#666',
-    fontSize: 10,
-  },
-  mealCardFooter: {
-    marginTop: 8,
-  },
-  mealOverviewItems: {
-    color: '#666',
-    fontSize: 12,
+  summaryMealStats: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 8,
   },
-  mealProgress: {
+  summaryMealCalories: {
+    color: '#007AFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 4,
+  },
+  summaryMealCaloriesLabel: {
+    color: '#666',
+    fontSize: 10,
+    marginRight: 8,
+  },
+  summaryMealItems: {
+    color: '#666',
+    fontSize: 11,
+  },
+  summaryMealProgress: {
     height: 3,
     backgroundColor: '#333',
     borderRadius: 2,
     overflow: 'hidden',
   },
-  mealProgressBar: {
+  summaryMealProgressBar: {
     height: '100%',
     backgroundColor: '#4CAF50',
     borderRadius: 2,
