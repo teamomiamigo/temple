@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-    Animated,
     Dimensions,
     StyleSheet,
     Text,
-    TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 import Svg, { Circle, G, Line, Text as SvgText } from 'react-native-svg';
 import { useWeightStore } from '../stores/weightStore';
+import { IOSTile } from './IOSTile';
 
 interface WeightTrackingWidgetProps {
   style?: any;
@@ -32,8 +31,6 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
     getStartWeight, 
     getWeightChange 
   } = useWeightStore();
-  
-  const [scaleAnimation] = useState(new Animated.Value(1));
   
   // Get 90 days of data for the chart
   const chartData = getWeightEntriesForPeriod(90);
@@ -107,23 +104,6 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
   
   const xAxisLabels = getXAxisLabels();
   
-  const handlePress = () => {
-    // Animate press
-    Animated.sequence([
-      Animated.timing(scaleAnimation, {
-        toValue: 0.95,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnimation, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-    
-    onPress?.();
-  };
   
   const formatWeight = (weight: number) => {
     return `${Math.round(weight)} ${unit}`;
@@ -135,15 +115,14 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
   };
   
   return (
-    <Animated.View style={[styles.container, style, { transform: [{ scale: scaleAnimation }] }]}>
-      <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
+    <IOSTile style={[styles.container, style]} onPress={onPress}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Weight</Text>
           <Text style={styles.subtitle}>Last 90 days</Text>
-          <TouchableOpacity style={styles.addButton}>
+          <IOSTile style={styles.addButton} onPress={() => {}}>
             <Text style={styles.addButtonText}>+</Text>
-          </TouchableOpacity>
+          </IOSTile>
         </View>
         
         {/* Chart */}
@@ -261,8 +240,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
             <Text style={styles.emptyStateSubtext}>Tap + to add your first entry</Text>
           </View>
         )}
-      </TouchableOpacity>
-    </Animated.View>
+    </IOSTile>
   );
 };
 

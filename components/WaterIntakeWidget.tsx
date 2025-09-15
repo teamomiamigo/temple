@@ -10,6 +10,7 @@ import {
     View,
 } from 'react-native';
 import { useNutritionStore } from '../stores/nutritionStore';
+import { IOSTile } from './IOSTile';
 
 interface WaterIntakeWidgetProps {
   style?: any;
@@ -111,36 +112,36 @@ export const WaterIntakeWidget: React.FC<WaterIntakeWidgetProps> = ({ style }) =
       
       {/* Quick Add Buttons */}
       <View style={styles.quickButtonsContainer}>
-        <TouchableOpacity
+        <IOSTile
           style={styles.quickButton}
           onPress={() => handleQuickAdd(237)} // 8oz = 237ml
         >
           <Text style={styles.quickButtonEmoji}>☕</Text>
           <Text style={styles.quickButtonText}>8oz</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity
+        <IOSTile
           style={styles.quickButton}
           onPress={() => handleQuickAdd(710)} // 24oz = 710ml
         >
           <Text style={styles.quickButtonEmoji}>🍼</Text>
           <Text style={styles.quickButtonText}>24oz</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity
+        <IOSTile
           style={styles.quickButton}
           onPress={() => handleQuickAdd(500)}
         >
           <Text style={styles.quickButtonEmoji}>🥤</Text>
           <Text style={styles.quickButtonText}>500ml</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity
+        <IOSTile
           style={styles.customButton}
           onPress={() => setShowCustomInput(true)}
         >
           <Text style={styles.customButtonText}>+</Text>
-        </TouchableOpacity>
+        </IOSTile>
       </View>
       
       {/* Custom Input Modal */}

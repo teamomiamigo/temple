@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
-import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { IOSTile } from '../components/IOSTile';
 import { Template, useTemplateStore } from '../stores/templateStore';
 
 type BodyScreenProps = {
@@ -8,35 +9,13 @@ type BodyScreenProps = {
 };
 
 export const BodyScreen = ({ navigation }: BodyScreenProps) => {
-  const [templateScale] = useState(new Animated.Value(1));
-  const [workoutScale] = useState(new Animated.Value(1));
-  
   const templates = useTemplateStore(state => state.templates);
   const addTemplate = useTemplateStore(state => state.addTemplate);
   const updateTemplate = useTemplateStore(state => state.updateTemplate);
-
-  const handleTemplatePress = (pressed: boolean) => {
-    Animated.spring(templateScale, {
-      toValue: pressed ? 0.95 : 1,
-      useNativeDriver: true,
-    }).start();
-    
-    if (!pressed) {
-      navigation.navigate('BuildTemplate');
-    }
-  };
-
-  const handleWorkoutPress = (pressed: boolean) => {
-    Animated.spring(workoutScale, {
-      toValue: pressed ? 0.95 : 1,
-      useNativeDriver: true,
-    }).start();
-  };
-
   const renderTemplateCard = (template: Template) => {
     return (
-      <TouchableOpacity 
-        key={template.id} 
+      <IOSTile
+        key={template.id}
         style={styles.templateCard}
         onPress={() => {
           navigation.navigate('BuildTemplate', { templateId: template.id });
@@ -54,7 +33,7 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <View style={styles.templateCardFooter}>
           <Text style={styles.templateCardTime}>Last used: Never</Text>
         </View>
-      </TouchableOpacity>
+      </IOSTile>
     );
   };
 
@@ -88,37 +67,37 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <View style={styles.quickActionsSection}>
           <Text style={styles.sectionTitle}>Quick Start</Text>
           <View style={styles.quickActionsGrid}>
-            <TouchableOpacity style={styles.quickActionCard} onPress={handleStartWorkout}>
+            <IOSTile style={styles.quickActionCard} onPress={handleStartWorkout}>
               <View style={styles.quickActionIcon}>
                 <Text style={styles.quickActionEmoji}>🏋️</Text>
               </View>
               <Text style={styles.quickActionTitle}>Start Workout</Text>
               <Text style={styles.quickActionSubtitle}>Begin training</Text>
-            </TouchableOpacity>
+            </IOSTile>
 
-            <TouchableOpacity style={styles.quickActionCard} onPress={handleLogRun}>
+            <IOSTile style={styles.quickActionCard} onPress={handleLogRun}>
               <View style={styles.quickActionIcon}>
                 <Text style={styles.quickActionEmoji}>🏃</Text>
               </View>
               <Text style={styles.quickActionTitle}>Log Run</Text>
               <Text style={styles.quickActionSubtitle}>Track your run</Text>
-            </TouchableOpacity>
+            </IOSTile>
 
-            <TouchableOpacity style={styles.quickActionCard} onPress={handleQuickWorkout}>
+            <IOSTile style={styles.quickActionCard} onPress={handleQuickWorkout}>
               <View style={styles.quickActionIcon}>
                 <Text style={styles.quickActionEmoji}>⚡</Text>
               </View>
               <Text style={styles.quickActionTitle}>Quick Log</Text>
               <Text style={styles.quickActionSubtitle}>Fast entry</Text>
-            </TouchableOpacity>
+            </IOSTile>
 
-            <TouchableOpacity style={styles.quickActionCard} onPress={handleAddTemplatePress}>
+            <IOSTile style={styles.quickActionCard} onPress={handleAddTemplatePress}>
               <View style={styles.quickActionIcon}>
                 <Text style={styles.quickActionEmoji}>📝</Text>
               </View>
               <Text style={styles.quickActionTitle}>Create Template</Text>
               <Text style={styles.quickActionSubtitle}>Build routine</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
         </View>
 
@@ -126,20 +105,17 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <View style={styles.templatesSection}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>My Templates</Text>
-            <TouchableOpacity style={styles.addButton} onPress={handleAddTemplatePress}>
+            <IOSTile style={styles.addButton} onPress={handleAddTemplatePress}>
               <Text style={styles.addButtonText}>+ Add</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
 
           {templates.length === 0 ? (
-            <View style={styles.emptyState}>
+            <IOSTile style={styles.emptyState} onPress={handleAddTemplatePress}>
               <Text style={styles.emptyStateEmoji}>📋</Text>
               <Text style={styles.emptyStateTitle}>No templates yet</Text>
               <Text style={styles.emptyStateSubtitle}>Create your first workout template to get started</Text>
-              <TouchableOpacity style={styles.emptyStateButton} onPress={handleAddTemplatePress}>
-                <Text style={styles.emptyStateButtonText}>Create Template</Text>
-              </TouchableOpacity>
-            </View>
+            </IOSTile>
           ) : (
             <View style={styles.templatesGrid}>
               {templates.map(renderTemplateCard)}
@@ -151,9 +127,9 @@ export const BodyScreen = ({ navigation }: BodyScreenProps) => {
         <View style={styles.recentSection}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Recent Activity</Text>
-            <TouchableOpacity style={styles.viewAllButton}>
+            <IOSTile style={styles.viewAllButton} onPress={() => {}}>
               <Text style={styles.viewAllButtonText}>View All</Text>
-            </TouchableOpacity>
+            </IOSTile>
           </View>
 
           <View style={styles.recentActivityList}>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { IOSTile } from '../components/IOSTile';
 
 type MindScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -153,9 +154,9 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.menuButton}>
+        <IOSTile style={styles.menuButton} onPress={() => {}}>
           <Text style={styles.menuIcon}>☰</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
         <View style={styles.headerTitle}>
           <Text style={styles.title}>Journal</Text>
@@ -163,80 +164,80 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
         </View>
         
         <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.headerButton}>
+          <IOSTile style={styles.headerButton} onPress={() => {}}>
             <Text style={styles.headerIcon}>🔍</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.headerButton}>
+          </IOSTile>
+          <IOSTile style={styles.headerButton} onPress={() => {}}>
             <Text style={styles.headerIcon}>💬</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.profileButton}>
+          </IOSTile>
+          <IOSTile style={styles.profileButton} onPress={() => {}}>
             <Text style={styles.profileText}>NM</Text>
-          </TouchableOpacity>
+          </IOSTile>
         </View>
       </View>
 
       {/* Navigation Tabs */}
       <View style={styles.tabBar}>
-        <TouchableOpacity 
+        <IOSTile 
           style={[styles.tab, activeTab === 'list' && styles.tabActive]}
           onPress={() => setActiveTab('list')}
         >
           <Text style={styles.tabIcon}>📖</Text>
           <Text style={[styles.tabText, activeTab === 'list' && styles.tabTextActive]}>List</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity 
+        <IOSTile 
           style={[styles.tab, activeTab === 'calendar' && styles.tabActive]}
           onPress={() => setActiveTab('calendar')}
         >
           <Text style={[styles.tabText, activeTab === 'calendar' && styles.tabTextActive]}>Calendar</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity 
+        <IOSTile 
           style={[styles.tab, activeTab === 'media' && styles.tabActive]}
           onPress={() => setActiveTab('media')}
         >
           <Text style={[styles.tabText, activeTab === 'media' && styles.tabTextActive]}>Media</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity 
+        <IOSTile 
           style={[styles.tab, activeTab === 'map' && styles.tabActive]}
           onPress={() => setActiveTab('map')}
         >
           <Text style={[styles.tabText, activeTab === 'map' && styles.tabTextActive]}>Map</Text>
-        </TouchableOpacity>
+        </IOSTile>
       </View>
 
       {/* Content */}
       {renderContent()}
 
       {/* Floating Action Button */}
-      <TouchableOpacity 
+      <IOSTile 
         style={styles.fab}
         onPress={() => navigation.navigate('JournalEntry')}
       >
         <Text style={styles.fabIcon}>+</Text>
-      </TouchableOpacity>
+      </IOSTile>
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.bottomNavItem}>
+        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
           <Text style={styles.bottomNavIcon}>📖</Text>
           <Text style={styles.bottomNavLabel}>Journals</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity 
+        <IOSTile 
           style={styles.bottomNavItem}
           onPress={() => navigation.navigate('Prompts')}
         >
           <Text style={styles.bottomNavIcon}>❓</Text>
           <Text style={styles.bottomNavLabel}>Prompts</Text>
-        </TouchableOpacity>
+        </IOSTile>
         
-        <TouchableOpacity style={styles.bottomNavItem}>
+        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
           <Text style={styles.bottomNavIcon}>⋯</Text>
           <Text style={styles.bottomNavLabel}>More</Text>
-        </TouchableOpacity>
+        </IOSTile>
       </View>
     </View>
   );
