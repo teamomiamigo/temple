@@ -18,6 +18,19 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   const goals = useNutritionStore((state) => state.goals);
   const todayNutrition = useNutritionStore((state) => state.getTodayNutrition());
   
+  // Helper functions
+  const getMealCalories = (mealName: string) => {
+    if (!todayNutrition) return 0;
+    const meal = todayNutrition.meals.find(m => m.name === mealName);
+    return meal ? meal.entries.reduce((sum, entry) => sum + entry.calories, 0) : 0;
+  };
+  
+  const getMealItems = (mealName: string) => {
+    if (!todayNutrition) return [];
+    const meal = todayNutrition.meals.find(m => m.name === mealName);
+    return meal ? meal.entries : [];
+  };
+  
   // Calculate consumed macros
   const consumed = {
     calories: todayNutrition?.totalCalories || 0,
@@ -48,23 +61,17 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   const handleWeightTrackingPress = () => {
     navigation.navigate('WeightTracking');
   };
-  
-  const getMealCalories = (mealName: string) => {
-    if (!todayNutrition) return 0;
-    const meal = todayNutrition.meals.find(m => m.name === mealName);
-    return meal ? meal.entries.reduce((sum, entry) => sum + entry.calories, 0) : 0;
-  };
-  
-  const getMealItems = (mealName: string) => {
-    if (!todayNutrition) return [];
-    const meal = todayNutrition.meals.find(m => m.name === mealName);
-    return meal ? meal.entries : [];
-  };
 
   return (
     <View style={styles.screen}>
       <ScrollView style={styles.container}>
         <Text style={styles.pageTitle}>Let's Eat Healthy.</Text>
+
+        {/* Test - Simple View First */}
+        <View style={{ backgroundColor: '#111', padding: 20, borderRadius: 16, marginBottom: 20 }}>
+          <Text style={{ color: '#fff', fontSize: 24 }}>Test Card</Text>
+          <Text style={{ color: '#999', fontSize: 16 }}>Calories Left: {caloriesLeft}</Text>
+        </View>
 
         {/* Calories Card */}
         <CaloriesCard 
