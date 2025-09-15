@@ -11,11 +11,14 @@ import { JournalEntryScreen } from '../screens/JournalEntryScreen';
 import { LogItemScreen } from '../screens/LogItemScreen';
 import { LogMealScreen } from '../screens/LogMealScreen';
 import { LogSelectionScreen } from '../screens/LogSelectionScreen';
+import { MeditationPlayerScreen } from '../screens/MeditationPlayerScreen';
+import { MeditationTopicScreen } from '../screens/MeditationTopicScreen';
 import { MindScreen } from '../screens/MindScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
 import { PromptsScreen } from '../screens/PromptsScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
+import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
 import { WeightTrackingScreen } from '../screens/WeightTrackingScreen';
@@ -24,6 +27,7 @@ const Tab = createBottomTabNavigator();
 const BodyStack = createNativeStackNavigator();
 const NutritionStack = createNativeStackNavigator();
 const MindStack = createNativeStackNavigator();
+const TempleStack = createNativeStackNavigator();
 
 const BodyStackNavigator = () => {
   return (
@@ -57,6 +61,16 @@ const MindStackNavigator = () => {
       <MindStack.Screen name="JournalEntry" component={JournalEntryScreen} />
       <MindStack.Screen name="Prompts" component={PromptsScreen} />
     </MindStack.Navigator>
+  );
+};
+
+const TempleStackNavigator = () => {
+  return (
+    <TempleStack.Navigator screenOptions={{ headerShown: false }}>
+      <TempleStack.Screen name="TempleMain" component={TempleScreen} />
+      <TempleStack.Screen name="MeditationTopic" component={MeditationTopicScreen} />
+      <TempleStack.Screen name="MeditationPlayer" component={MeditationPlayerScreen} />
+    </TempleStack.Navigator>
   );
 };
 
@@ -104,7 +118,7 @@ export const AppNavigator = () => {
         />
         <Tab.Screen 
           name="Temple" 
-          component={TempleScreen}
+          component={TempleStackNavigator}
           options={{
             tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
           }}
