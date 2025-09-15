@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { IOSTile } from './IOSTile';
 
 type MealSummary = {
   name: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
@@ -46,12 +45,12 @@ const getMealTimeRange = (mealName: string) => {
 
 export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => {
   return (
-    <IOSTile style={styles.todaySummaryBox} onPress={() => {}}>
+    <View style={styles.todaySummaryBox}>
       <View style={styles.summaryHeader}>
         <Text style={styles.sectionTitle}>Today's Summary</Text>
-        <IOSTile onPress={onViewSavedMeals} style={styles.savedMealsButton}>
+        <View style={styles.savedMealsButton}>
           <Text style={styles.savedMealsButtonText}>📚 Saved Meals</Text>
-        </IOSTile>
+        </View>
       </View>
       
       <View style={styles.summaryGrid}>
@@ -77,7 +76,7 @@ export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => 
           </View>
         ))}
       </View>
-    </IOSTile>
+    </View>
   );
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { IOSTile } from './IOSTile';
 
 type CaloriesCardProps = {
   caloriesLeft: number;
@@ -12,7 +11,7 @@ export const CaloriesCard = ({ caloriesLeft, goal, consumed }: CaloriesCardProps
   const progressWidth = Math.min(100, (consumed / goal) * 100);
 
   return (
-    <IOSTile style={styles.caloriesCard} onPress={() => {}}>
+    <View style={styles.caloriesCard}>
       <View style={styles.caloriesContent}>
         <View style={styles.caloriesLeft}>
           <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
@@ -28,7 +27,7 @@ export const CaloriesCard = ({ caloriesLeft, goal, consumed }: CaloriesCardProps
           <Text style={styles.caloriesGoal}>Goal: {goal}</Text>
         </View>
       </View>
-    </IOSTile>
+    </View>
   );
 };
 

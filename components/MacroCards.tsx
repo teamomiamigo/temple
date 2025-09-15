@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { IOSTile } from './IOSTile';
 
 const { width } = Dimensions.get('window');
 const macroCardWidth = (width - 32 - 16) / 3; // padding + gaps
@@ -17,7 +16,7 @@ export const MacroCards = ({ goals, consumed }: MacroCardsProps) => {
 
   return (
     <View style={styles.macroRow}>
-      <IOSTile style={[styles.macroCard, styles.proteinCard]} onPress={() => {}}>
+      <View style={[styles.macroCard, styles.proteinCard]}>
         <View style={styles.macroIconContainer}>
           <Text style={styles.macroIcon}>🥩</Text>
         </View>
@@ -26,9 +25,9 @@ export const MacroCards = ({ goals, consumed }: MacroCardsProps) => {
         <View style={styles.macroProgress}>
           <View style={[styles.macroProgressBar, { width: `${Math.min(100, (consumed.protein / goals.protein) * 100)}%` }]} />
         </View>
-      </IOSTile>
+      </View>
       
-      <IOSTile style={[styles.macroCard, styles.carbsCard]} onPress={() => {}}>
+      <View style={[styles.macroCard, styles.carbsCard]}>
         <View style={styles.macroIconContainer}>
           <Text style={styles.macroIcon}>🍞</Text>
         </View>
@@ -37,9 +36,9 @@ export const MacroCards = ({ goals, consumed }: MacroCardsProps) => {
         <View style={styles.macroProgress}>
           <View style={[styles.macroProgressBar, { width: `${Math.min(100, (consumed.carbs / goals.carbs) * 100)}%` }]} />
         </View>
-      </IOSTile>
+      </View>
       
-      <IOSTile style={[styles.macroCard, styles.fatCard]} onPress={() => {}}>
+      <View style={[styles.macroCard, styles.fatCard]}>
         <View style={styles.macroIconContainer}>
           <Text style={styles.macroIcon}>🥑</Text>
         </View>
@@ -48,7 +47,7 @@ export const MacroCards = ({ goals, consumed }: MacroCardsProps) => {
         <View style={styles.macroProgress}>
           <View style={[styles.macroProgressBar, { width: `${Math.min(100, (consumed.fat / goals.fat) * 100)}%` }]} />
         </View>
-      </IOSTile>
+      </View>
     </View>
   );
 };

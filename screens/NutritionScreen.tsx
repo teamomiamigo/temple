@@ -9,7 +9,6 @@ import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
-import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange } from '../utils/mealUtils';
 
 type NutritionScreenProps = {
   navigation: NativeStackNavigationProp<any>;
