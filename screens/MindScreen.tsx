@@ -1,321 +1,523 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Dimensions, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IOSTile } from '../components/IOSTile';
 
-const { width } = Dimensions.get('window');
-const RING_SIZE = width * 0.7;
-const STROKE_WIDTH = 16;
-const RADIUS = (RING_SIZE - STROKE_WIDTH) / 2;
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+type MindScreenProps = {
+  navigation: NativeStackNavigationProp<any>;
+};
 
-export const MindScreen = () => {
-  // These will be set from backend/user data in the future
-  const [emotionsCount, setEmotionsCount] = useState(0);
-  const [streak, setStreak] = useState(0);
-  const [checkIns, setCheckIns] = useState(0);
-  // Animated progress: 0 = empty, 1 = full (checked in today)
-  const progress = useRef(new Animated.Value(0)).current;
-  const [checkedIn, setCheckedIn] = useState(false);
+export const MindScreen = ({ navigation }: MindScreenProps) => {
+  const [activeTab, setActiveTab] = useState<'list' | 'calendar' | 'media' | 'map'>('list');
 
-  const animateProgress = (toValue: number) => {
-    Animated.timing(progress, {
-      toValue,
-      duration: 900,
-      easing: Easing.out(Easing.exp),
-      useNativeDriver: false,
-    }).start();
-  };
+  const journalEntries = [
+    {
+      id: '1',
+      date: '2025-01-15',
+      day: 'WED',
+      dayNumber: '15',
+      title: 'Reflecting on today',
+      preview: 'Had a great day today. Feeling grateful for the small moments and the people in my life...',
+      time: '8:30 PM',
+    },
+    {
+      id: '2',
+      date: '2025-01-14',
+      day: 'TUE',
+      dayNumber: '14',
+      title: 'Mindful morning',
+      preview: 'Started the day with meditation and it really set the tone for everything else...',
+      time: '7:15 AM',
+    },
+    {
+      id: '3',
+      date: '2025-01-13',
+      day: 'MON',
+      dayNumber: '13',
+      title: 'Weekend thoughts',
+      preview: 'Spent time thinking about my goals and what I want to focus on this week...',
+      time: '9:45 PM',
+    },
+  ];
 
-  const handleCheckIn = () => {
-    if (!checkedIn) {
-      animateProgress(1);
-      setCheckIns(checkIns + 1);
-      setEmotionsCount(emotionsCount + 1); // demo only
-      setStreak(streak + 1); // demo only
-    } else {
-      animateProgress(0);
-      setCheckIns(checkIns - 1);
-      setEmotionsCount(emotionsCount - 1); // demo only
-      setStreak(streak - 1); // demo only
+  const renderListTab = () => (
+    <View style={styles.contentArea}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>January 2025</Text>
+      </View>
+      
+      {journalEntries.map((entry) => (
+        <TouchableOpacity key={entry.id} style={styles.entryItem}>
+          <View style={styles.entryDate}>
+            <Text style={styles.entryDay}>{entry.day}</Text>
+            <Text style={styles.entryDayNumber}>{entry.dayNumber}</Text>
+          </View>
+          <View style={styles.entryContent}>
+            <Text style={styles.entryTitle}>{entry.title}</Text>
+            <Text style={styles.entryPreview}>{entry.preview}</Text>
+            <Text style={styles.entryTime}>{entry.time}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+
+  const renderCalendarTab = () => (
+    <View style={styles.contentArea}>
+      <View style={styles.calendarContainer}>
+        <View style={styles.calendarHeader}>
+          <Text style={styles.calendarMonth}>January 2025</Text>
+        </View>
+        
+        <View style={styles.calendarGrid}>
+          {/* Day headers */}
+          <View style={styles.dayHeaders}>
+            {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
+              <Text key={day} style={styles.dayHeader}>{day}</Text>
+            ))}
+          </View>
+          
+          {/* Calendar days */}
+          <View style={styles.calendarDays}>
+            {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+              <TouchableOpacity key={day} style={styles.calendarDay}>
+                <Text style={[
+                  styles.calendarDayText,
+                  day === 15 && styles.calendarDaySelected
+                ]}>
+                  {day}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderMediaTab = () => (
+    <View style={styles.contentArea}>
+      <View style={styles.mediaFilters}>
+        <TouchableOpacity style={[styles.filterTab, styles.filterTabActive]}>
+          <Text style={[styles.filterTabText, styles.filterTabTextActive]}>All</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.filterTab}>
+          <Text style={styles.filterTabText}>Photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.filterTab}>
+          <Text style={styles.filterTabText}>Video</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.filterTab}>
+          <Text style={styles.filterTabText}>Audio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.filterTab}>
+          <Text style={styles.filterTabText}>PDF</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.emptyState}>
+        <Text style={styles.emptyStateTitle}>Media Timeline</Text>
+        <Text style={styles.emptyStateSubtitle}>
+          Photo, video, audio, and PDF files will appear here when added to your journal
+        </Text>
+      </View>
+    </View>
+  );
+
+  const renderMapTab = () => (
+    <View style={styles.contentArea}>
+      <View style={styles.emptyState}>
+        <Text style={styles.emptyStateTitle}>Map View</Text>
+        <Text style={styles.emptyStateSubtitle}>
+          Journal entries with location data will appear here
+        </Text>
+      </View>
+    </View>
+  );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'list':
+        return renderListTab();
+      case 'calendar':
+        return renderCalendarTab();
+      case 'media':
+        return renderMediaTab();
+      case 'map':
+        return renderMapTab();
+      default:
+        return renderListTab();
     }
-    setCheckedIn(!checkedIn);
   };
-
-  // Interpolate the animated value to get the strokeDashoffset
-  const animatedStrokeDashoffset = progress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [CIRCUMFERENCE, 0],
-  });
 
   return (
-    <View style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.container}>
-        {/* Top bar */}
-        <View style={styles.topBar}>
-          <IOSTile style={styles.iconButton} onPress={() => {}}>
-            <Text style={styles.iconHex}>⬡</Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <IOSTile style={styles.menuButton} onPress={() => {}}>
+          <Text style={styles.menuIcon}>☰</Text>
+        </IOSTile>
+        
+        <View style={styles.headerTitle}>
+          <Text style={styles.title}>Journal</Text>
+          <Text style={styles.year}>2025</Text>
+        </View>
+        
+        <View style={styles.headerActions}>
+          <IOSTile style={styles.headerButton} onPress={() => {}}>
+            <Text style={styles.headerIcon}>🔍</Text>
           </IOSTile>
-          <View style={styles.badgesRow}>
-            <IOSTile style={styles.badge} onPress={() => {}}>
-              <Text style={styles.badgeText}>{emotionsCount} emotions</Text>
-            </IOSTile>
-            <IOSTile style={styles.badge} onPress={() => {}}>
-              <Text style={styles.badgeText}>{streak} day streak</Text>
-            </IOSTile>
-          </View>
-          <IOSTile style={styles.iconButton} onPress={() => {}}>
-            <Text style={styles.iconHeart}>♡</Text>
+          <IOSTile style={styles.headerButton} onPress={() => {}}>
+            <Text style={styles.headerIcon}>💬</Text>
+          </IOSTile>
+          <IOSTile style={styles.profileButton} onPress={() => {}}>
+            <Text style={styles.profileText}>NM</Text>
           </IOSTile>
         </View>
+      </View>
 
-        {/* Prompt */}
-        <Text style={styles.prompt}>How are you feeling this evening?</Text>
+      {/* Navigation Tabs */}
+      <View style={styles.tabBar}>
+        <IOSTile 
+          style={[styles.tab, activeTab === 'list' && styles.tabActive]}
+          onPress={() => setActiveTab('list')}
+        >
+          <Text style={styles.tabIcon}>📖</Text>
+          <Text style={[styles.tabText, activeTab === 'list' && styles.tabTextActive]}>List</Text>
+        </IOSTile>
+        
+        <IOSTile 
+          style={[styles.tab, activeTab === 'calendar' && styles.tabActive]}
+          onPress={() => setActiveTab('calendar')}
+        >
+          <Text style={[styles.tabText, activeTab === 'calendar' && styles.tabTextActive]}>Calendar</Text>
+        </IOSTile>
+        
+        <IOSTile 
+          style={[styles.tab, activeTab === 'media' && styles.tabActive]}
+          onPress={() => setActiveTab('media')}
+        >
+          <Text style={[styles.tabText, activeTab === 'media' && styles.tabTextActive]}>Media</Text>
+        </IOSTile>
+        
+        <IOSTile 
+          style={[styles.tab, activeTab === 'map' && styles.tabActive]}
+          onPress={() => setActiveTab('map')}
+        >
+          <Text style={[styles.tabText, activeTab === 'map' && styles.tabTextActive]}>Map</Text>
+        </IOSTile>
+      </View>
 
-        {/* Circular Check-in Button with dynamic progress */}
-        <View style={styles.ringContainer}>
-          <View style={styles.ringBg}>
-            {/* Progress ring using SVG */}
-            <Svg width={RING_SIZE} height={RING_SIZE} style={StyleSheet.absoluteFill}>
-              {/* Background ring */}
-              <Circle
-                cx={RING_SIZE / 2}
-                cy={RING_SIZE / 2}
-                r={RADIUS}
-                stroke="#222"
-                strokeWidth={STROKE_WIDTH}
-                fill="none"
-              />
-              {/* Foreground progress ring */}
-              <AnimatedCircle
-                cx={RING_SIZE / 2}
-                cy={RING_SIZE / 2}
-                r={RADIUS}
-                stroke="url(#grad)"
-                strokeWidth={STROKE_WIDTH}
-                fill="none"
-                strokeDasharray={`${CIRCUMFERENCE},${CIRCUMFERENCE}`}
-                strokeDashoffset={animatedStrokeDashoffset}
-                strokeLinecap="round"
-              />
-              {/* Gradient definition (simple red/orange) */}
-              <Defs>
-                <LinearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-                  <Stop offset="0%" stopColor="#ff5050" />
-                  <Stop offset="100%" stopColor="#ffb347" />
-                </LinearGradient>
-              </Defs>
-            </Svg>
-            <IOSTile
-              style={styles.checkInButton}
-              onPress={handleCheckIn}
-              scaleValue={0.95}
-              duration={200}
-            >
-              <Text style={styles.checkInPlus}>＋</Text>
-              <Text style={styles.checkInText}>Check in</Text>
-            </IOSTile>
-          </View>
-        </View>
+      {/* Content */}
+      {renderContent()}
 
-        {/* Spacer for bottom nav */}
-        <View style={{ height: 120 }} />
-      </ScrollView>
+      {/* Floating Action Button */}
+      <IOSTile 
+        style={styles.fab}
+        onPress={() => navigation.navigate('JournalEntry')}
+      >
+        <Text style={styles.fabIcon}>+</Text>
+      </IOSTile>
 
-      {/* Bottom card and nav */}
-      <View style={styles.bottomCard}>
-        <Text style={styles.bottomCardText}>{checkIns} check-ins</Text>
-        <View style={styles.bottomNavRow}>
-          <IOSTile style={styles.bottomNavItemActive} onPress={() => {}}>
-            <Text style={styles.bottomNavIcon}>＋</Text>
-            <Text style={styles.bottomNavLabelActive}>Check in</Text>
-          </IOSTile>
-          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
-            <Text style={styles.bottomNavIcon}>🛠️</Text>
-            <Text style={styles.bottomNavLabel}>Tools</Text>
-          </IOSTile>
-          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
-            <Text style={styles.bottomNavIcon}>👥</Text>
-            <Text style={styles.bottomNavLabel}>Friends</Text>
-          </IOSTile>
-          <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
-            <Text style={styles.bottomNavIcon}>📊</Text>
-            <Text style={styles.bottomNavLabel}>Analyze</Text>
-          </IOSTile>
-        </View>
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
+          <Text style={styles.bottomNavIcon}>📖</Text>
+          <Text style={styles.bottomNavLabel}>Journals</Text>
+        </IOSTile>
+        
+        <IOSTile 
+          style={styles.bottomNavItem}
+          onPress={() => navigation.navigate('Prompts')}
+        >
+          <Text style={styles.bottomNavIcon}>❓</Text>
+          <Text style={styles.bottomNavLabel}>Prompts</Text>
+        </IOSTile>
+        
+        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
+          <Text style={styles.bottomNavIcon}>⋯</Text>
+          <Text style={styles.bottomNavLabel}>More</Text>
+        </IOSTile>
       </View>
     </View>
   );
 };
 
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
   container: {
-    alignItems: 'center',
-    paddingTop: 32,
-    paddingBottom: 0,
-    minHeight: '100%',
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  topBar: {
+  header: {
+    backgroundColor: '#007AFF',
+    paddingTop: 60,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 24,
-    paddingHorizontal: 16,
   },
-  iconButton: {
+  menuButton: {
     padding: 8,
   },
-  iconHex: {
+  menuIcon: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  headerTitle: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  title: {
     color: '#fff',
     fontSize: 28,
-    opacity: 0.7,
+    fontWeight: 'bold',
   },
-  iconHeart: {
+  year: {
     color: '#fff',
-    fontSize: 24,
-    opacity: 0.7,
+    fontSize: 16,
+    opacity: 0.8,
   },
-  badgesRow: {
+  headerActions: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
   },
-  badge: {
-    backgroundColor: '#222',
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    marginHorizontal: 4,
+  headerButton: {
+    padding: 8,
   },
-  badgeText: {
-    color: '#fff',
-    fontSize: 16,
-    opacity: 0.8,
-    fontWeight: '500',
-  },
-  prompt: {
-    color: '#fff',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 32,
-    marginHorizontal: 16,
-  },
-  ringContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 24,
-  },
-  ringBg: {
-    width: RING_SIZE,
-    height: RING_SIZE,
-    borderRadius: RING_SIZE / 2,
-    backgroundColor: '#18181a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  ringFg: {
-    position: 'absolute',
-    width: RING_SIZE,
-    height: RING_SIZE,
-    borderRadius: RING_SIZE / 2,
-    borderWidth: 16,
-    borderColor: 'rgba(255,80,80,0.8)', // placeholder for gradient
-    borderRightColor: 'orange',
-    borderLeftColor: '#18181a',
-    borderTopColor: '#18181a',
-    borderBottomColor: '#18181a',
-    zIndex: 1,
-    transform: [{ rotate: '45deg' }],
-  },
-  checkInButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#111',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 4,
-  },
-  checkInPlus: {
-    color: '#fff',
-    fontSize: 36,
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  checkInText: {
+  headerIcon: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '500',
-    opacity: 0.8,
   },
-  bottomCard: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#111',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    paddingTop: 16,
-    paddingBottom: 32,
-    paddingHorizontal: 16,
+  profileButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#8B4513',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: -2 },
-    elevation: 8,
+    justifyContent: 'center',
   },
-  bottomCardText: {
+  profileText: {
     color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f9fa',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  tabActive: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#000',
+  },
+  tabIcon: {
     fontSize: 16,
-    opacity: 0.8,
+    marginBottom: 4,
+  },
+  tabText: {
+    fontSize: 16,
+    color: '#666',
+    fontWeight: '500',
+  },
+  tabTextActive: {
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  contentArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  sectionHeader: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  entryItem: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  entryDate: {
+    width: 60,
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  entryDay: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  entryDayNumber: {
+    fontSize: 20,
+    color: '#333',
+    fontWeight: 'bold',
+    marginTop: 2,
+  },
+  entryContent: {
+    flex: 1,
+  },
+  entryTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+  },
+  entryPreview: {
+    fontSize: 16,
+    color: '#666',
+    lineHeight: 22,
+    marginBottom: 8,
+  },
+  entryTime: {
+    fontSize: 14,
+    color: '#999',
+  },
+  calendarContainer: {
+    padding: 20,
+  },
+  calendarHeader: {
+    marginBottom: 20,
+  },
+  calendarMonth: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  calendarGrid: {
+    backgroundColor: '#fff',
+  },
+  dayHeaders: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  dayHeader: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+    paddingVertical: 8,
+  },
+  calendarDays: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  calendarDay: {
+    width: width / 7,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarDayText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  calendarDaySelected: {
+    backgroundColor: '#007AFF',
+    color: '#fff',
+    borderRadius: 20,
+    width: 32,
+    height: 32,
+    textAlign: 'center',
+    lineHeight: 32,
+  },
+  mediaFilters: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    gap: 8,
+  },
+  filterTab: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  filterTabActive: {
+    backgroundColor: '#007AFF',
+  },
+  filterTabText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  filterTabTextActive: {
+    color: '#fff',
+  },
+  emptyState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 40,
+  },
+  emptyStateTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
     marginBottom: 12,
   },
-  bottomNavRow: {
+  emptyStateSubtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 100,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  fabIcon: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  bottomNav: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 8,
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    paddingBottom: 34,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
   },
   bottomNavItem: {
     flex: 1,
     alignItems: 'center',
-    opacity: 0.6,
-  },
-  bottomNavItemActive: {
-    flex: 1,
-    alignItems: 'center',
-    opacity: 1,
   },
   bottomNavIcon: {
-    color: '#fff',
-    fontSize: 24,
-    marginBottom: 2,
+    fontSize: 20,
+    marginBottom: 4,
   },
   bottomNavLabel: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: '500',
-    opacity: 0.7,
+    fontSize: 12,
+    color: '#666',
   },
-  bottomNavLabelActive: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: 'bold',
-    opacity: 1,
-  },
-}); 
+});
