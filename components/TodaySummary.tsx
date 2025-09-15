@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { IOSTile } from './IOSTile';
-import { getMealDisplayName, getMealEmoji, getMealTimeRange } from '../utils/mealUtils';
 
 type MealSummary = {
   name: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
@@ -12,6 +11,37 @@ type MealSummary = {
 type TodaySummaryProps = {
   meals: MealSummary[];
   onViewSavedMeals: () => void;
+};
+
+// Helper functions for meal display
+const getMealEmoji = (mealName: string) => {
+  switch (mealName) {
+    case 'breakfast': return '🧇';
+    case 'lunch': return '☀️';
+    case 'dinner': return '🌙';
+    case 'snacks': return '🍿';
+    default: return '🍽️';
+  }
+};
+
+const getMealDisplayName = (mealName: string) => {
+  switch (mealName) {
+    case 'breakfast': return 'Breakfast';
+    case 'lunch': return 'Lunch';
+    case 'dinner': return 'Dinner';
+    case 'snacks': return 'Snacks';
+    default: return mealName;
+  }
+};
+
+const getMealTimeRange = (mealName: string) => {
+  switch (mealName) {
+    case 'breakfast': return '7:00 AM - 11:00 AM';
+    case 'lunch': return '11:00 AM - 4:00 PM';
+    case 'dinner': return '4:00 PM - 9:00 PM';
+    case 'snacks': return '9:00 PM - 7:00 AM';
+    default: return '';
+  }
 };
 
 export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => {
