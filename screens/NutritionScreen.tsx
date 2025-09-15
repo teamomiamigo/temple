@@ -57,29 +57,54 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
 
         {/* Calories summary card */}
         <IOSTile style={styles.caloriesCard} onPress={() => {}}>
-          <View>
-            <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
-            <Text style={styles.caloriesLabel}>Calories left</Text>
-          </View>
-          <View style={styles.caloriesIconCircle}>
-            {/* A flame emoji as placeholder icon */}
-            <Text style={styles.flameIcon}>🔥</Text>
+          <View style={styles.caloriesContent}>
+            <View style={styles.caloriesLeft}>
+              <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
+              <Text style={styles.caloriesLabel}>calories left</Text>
+              <View style={styles.caloriesProgress}>
+                <View style={[styles.caloriesProgressBar, { width: `${Math.min(100, ((goals.calories - caloriesLeft) / goals.calories) * 100)}%` }]} />
+              </View>
+            </View>
+            <View style={styles.caloriesRight}>
+              <View style={styles.caloriesIconContainer}>
+                <Text style={styles.caloriesIcon}>🔥</Text>
+              </View>
+              <Text style={styles.caloriesGoal}>Goal: {goals.calories}</Text>
+            </View>
           </View>
         </IOSTile>
 
         {/* Macro cards */}
         <View style={styles.macroRow}>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
+          <IOSTile style={[styles.macroCard, styles.proteinCard]} onPress={() => {}}>
+            <View style={styles.macroIconContainer}>
+              <Text style={styles.macroIcon}>🥩</Text>
+            </View>
             <Text style={styles.macroValue}>{proteinLeft}g</Text>
-            <Text style={styles.macroLabel}>Protein left</Text>
+            <Text style={styles.macroLabel}>Protein</Text>
+            <View style={styles.macroProgress}>
+              <View style={[styles.macroProgressBar, { width: `${Math.min(100, ((goals.protein - proteinLeft) / goals.protein) * 100)}%` }]} />
+            </View>
           </IOSTile>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
+          <IOSTile style={[styles.macroCard, styles.carbsCard]} onPress={() => {}}>
+            <View style={styles.macroIconContainer}>
+              <Text style={styles.macroIcon}>🍞</Text>
+            </View>
             <Text style={styles.macroValue}>{carbsLeft}g</Text>
-            <Text style={styles.macroLabel}>Carbs left</Text>
+            <Text style={styles.macroLabel}>Carbs</Text>
+            <View style={styles.macroProgress}>
+              <View style={[styles.macroProgressBar, { width: `${Math.min(100, ((goals.carbs - carbsLeft) / goals.carbs) * 100)}%` }]} />
+            </View>
           </IOSTile>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
+          <IOSTile style={[styles.macroCard, styles.fatCard]} onPress={() => {}}>
+            <View style={styles.macroIconContainer}>
+              <Text style={styles.macroIcon}>🥑</Text>
+            </View>
             <Text style={styles.macroValue}>{fatLeft}g</Text>
-            <Text style={styles.macroLabel}>Fat left</Text>
+            <Text style={styles.macroLabel}>Fat</Text>
+            <View style={styles.macroProgress}>
+              <View style={[styles.macroProgressBar, { width: `${Math.min(100, ((goals.fat - fatLeft) / goals.fat) * 100)}%` }]} />
+            </View>
           </IOSTile>
         </View>
 
@@ -125,10 +150,27 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
         <View style={styles.mealsOverview}>
           {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal) => (
             <IOSTile key={meal} style={styles.mealOverviewCard} onPress={() => {}}>
-              <Text style={styles.mealOverviewEmoji}>{getMealEmoji(meal)}</Text>
-              <Text style={styles.mealOverviewName}>{getMealDisplayName(meal)}</Text>
-              <Text style={styles.mealOverviewCalories}>{getMealCalories(meal)} cal</Text>
-              <Text style={styles.mealOverviewItems}>{getMealItems(meal).length} items</Text>
+              <View style={styles.mealCardHeader}>
+                <View style={styles.mealIconContainer}>
+                  <Text style={styles.mealOverviewEmoji}>{getMealEmoji(meal)}</Text>
+                </View>
+                <View style={styles.mealCardInfo}>
+                  <Text style={styles.mealOverviewName}>{getMealDisplayName(meal)}</Text>
+                  <Text style={styles.mealOverviewTime}>{getMealTimeRange(meal)}</Text>
+                </View>
+                <View style={styles.mealCardStats}>
+                  <Text style={styles.mealOverviewCalories}>{getMealCalories(meal)}</Text>
+                  <Text style={styles.mealOverviewCaloriesLabel}>cal</Text>
+                </View>
+              </View>
+              <View style={styles.mealCardFooter}>
+                <Text style={styles.mealOverviewItems}>{getMealItems(meal).length} items logged</Text>
+                {getMealItems(meal).length > 0 && (
+                  <View style={styles.mealProgress}>
+                    <View style={[styles.mealProgressBar, { width: `${Math.min(100, (getMealCalories(meal) / 500) * 100)}%` }]} />
+                  </View>
+                )}
+              </View>
             </IOSTile>
           ))}
         </View>
@@ -172,33 +214,62 @@ const styles = StyleSheet.create({
     backgroundColor: '#111',
     borderRadius: 20,
     padding: 24,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  caloriesContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 24,
+  },
+  caloriesLeft: {
+    flex: 1,
   },
   caloriesValue: {
     color: '#fff',
     fontSize: 48,
     fontWeight: '800',
+    marginBottom: 4,
   },
   caloriesLabel: {
     color: '#999',
     fontSize: 16,
-    marginTop: 4,
+    marginBottom: 12,
   },
-  caloriesIconCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 4,
-    borderColor: '#333',
+  caloriesProgress: {
+    height: 6,
+    backgroundColor: '#333',
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  caloriesProgressBar: {
+    height: '100%',
+    backgroundColor: '#FF6B35',
+    borderRadius: 3,
+  },
+  caloriesRight: {
+    alignItems: 'center',
+  },
+  caloriesIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#FF6B35',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 8,
   },
-  flameIcon: {
+  caloriesIcon: {
     fontSize: 32,
-    color: '#fff',
+  },
+  caloriesGoal: {
+    color: '#999',
+    fontSize: 14,
+    fontWeight: '500',
   },
   macroRow: {
     flexDirection: 'row',
@@ -209,18 +280,61 @@ const styles = StyleSheet.create({
     width: macroCardWidth,
     backgroundColor: '#111',
     borderRadius: 16,
-    paddingVertical: 20,
+    padding: 16,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  proteinCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#FF6B35',
+  },
+  carbsCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#4CAF50',
+  },
+  fatCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#FFC107',
+  },
+  macroIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#222',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  macroIcon: {
+    fontSize: 20,
   },
   macroValue: {
     color: '#fff',
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '700',
     marginBottom: 4,
   },
   macroLabel: {
     color: '#999',
-    fontSize: 14,
+    fontSize: 12,
+    marginBottom: 8,
+    fontWeight: '500',
+  },
+  macroProgress: {
+    width: '100%',
+    height: 4,
+    backgroundColor: '#333',
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  macroProgressBar: {
+    height: '100%',
+    backgroundColor: '#007AFF',
+    borderRadius: 2,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -298,30 +412,75 @@ const styles = StyleSheet.create({
   },
   mealOverviewCard: {
     backgroundColor: '#111',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     width: '48%',
     marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  mealCardHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 12,
+  },
+  mealIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#222',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
   },
   mealOverviewEmoji: {
-    fontSize: 24,
-    marginBottom: 8,
+    fontSize: 20,
+  },
+  mealCardInfo: {
+    flex: 1,
   },
   mealOverviewName: {
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
-    marginBottom: 4,
+    marginBottom: 2,
+  },
+  mealOverviewTime: {
+    color: '#666',
+    fontSize: 11,
+  },
+  mealCardStats: {
+    alignItems: 'flex-end',
   },
   mealOverviewCalories: {
     color: '#007AFF',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 2,
+  },
+  mealOverviewCaloriesLabel: {
+    color: '#666',
+    fontSize: 10,
+  },
+  mealCardFooter: {
+    marginTop: 8,
   },
   mealOverviewItems: {
     color: '#666',
     fontSize: 12,
+    marginBottom: 8,
+  },
+  mealProgress: {
+    height: 3,
+    backgroundColor: '#333',
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  mealProgressBar: {
+    height: '100%',
+    backgroundColor: '#4CAF50',
+    borderRadius: 2,
   },
 }); 
