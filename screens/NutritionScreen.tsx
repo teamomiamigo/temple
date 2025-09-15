@@ -1,13 +1,14 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AnimatedPlusButton } from '../components/AnimatedPlusButton';
-import { IOSTile } from '../components/IOSTile';
+import { CaloriesCard } from '../components/CaloriesCard';
+import { MacroCards } from '../components/MacroCards';
+import { TodaySummary } from '../components/TodaySummary';
 import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
-import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange, isCurrentMealTime } from '../utils/mealUtils';
 
 type NutritionScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -17,14 +18,37 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   const goals = useNutritionStore((state) => state.goals);
   const todayNutrition = useNutritionStore((state) => state.getTodayNutrition());
   
-  // Calculate remaining macros
-  const caloriesLeft = Math.max(0, goals.calories - (todayNutrition?.totalCalories || 0));
-  const proteinLeft = Math.max(0, goals.protein - (todayNutrition?.totalProtein || 0));
-  const carbsLeft = Math.max(0, goals.carbs - (todayNutrition?.totalCarbs || 0));
-  const fatLeft = Math.max(0, goals.fat - (todayNutrition?.totalFat || 0));
+  // Helper functions
+  const getMealCalories = (mealName: string) => {
+    if (!todayNutrition) return 0;
+    const meal = todayNutrition.meals.find(m => m.name === mealName);
+    return meal ? meal.entries.reduce((sum, entry) => sum + entry.calories, 0) : 0;
+  };
   
-  // Get current meal based on time
-  const currentMeal = getMealByTime();
+  const getMealItems = (mealName: string) => {
+    if (!todayNutrition) return [];
+    const meal = todayNutrition.meals.find(m => m.name === mealName);
+    return meal ? meal.entries : [];
+  };
+  
+  // Calculate consumed macros
+  const consumed = {
+    calories: todayNutrition?.totalCalories || 0,
+    protein: todayNutrition?.totalProtein || 0,
+    carbs: todayNutrition?.totalCarbs || 0,
+    fat: todayNutrition?.totalFat || 0,
+  };
+  
+  // Calculate remaining calories
+  const caloriesLeft = Math.max(0, goals.calories - consumed.calories);
+  
+  // Prepare meal data
+  const meals = [
+    { name: 'breakfast' as const, calories: getMealCalories('breakfast'), items: getMealItems('breakfast').length },
+    { name: 'lunch' as const, calories: getMealCalories('lunch'), items: getMealItems('lunch').length },
+    { name: 'dinner' as const, calories: getMealCalories('dinner'), items: getMealItems('dinner').length },
+    { name: 'snacks' as const, calories: getMealCalories('snacks'), items: getMealItems('snacks').length },
+  ];
   
   const handleLogFood = () => {
     navigation.navigate('UnifiedFoodLogging');
@@ -37,101 +61,30 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   const handleWeightTrackingPress = () => {
     navigation.navigate('WeightTracking');
   };
-  
-  const getMealCalories = (mealName: string) => {
-    if (!todayNutrition) return 0;
-    const meal = todayNutrition.meals.find(m => m.name === mealName);
-    return meal ? meal.entries.reduce((sum, entry) => sum + entry.calories, 0) : 0;
-  };
-  
-  const getMealItems = (mealName: string) => {
-    if (!todayNutrition) return [];
-    const meal = todayNutrition.meals.find(m => m.name === mealName);
-    return meal ? meal.entries : [];
-  };
 
   return (
     <View style={styles.screen}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Text style={styles.pageTitle}>Let's Eat Healthy.</Text>
 
-        {/* Calories summary card */}
-        <IOSTile style={styles.caloriesCard} onPress={() => {}}>
-          <View>
-            <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
-            <Text style={styles.caloriesLabel}>Calories left</Text>
-          </View>
-          <View style={styles.caloriesIconCircle}>
-            {/* A flame emoji as placeholder icon */}
-            <Text style={styles.flameIcon}>🔥</Text>
-          </View>
-        </IOSTile>
+        {/* Calories Card */}
+        <CaloriesCard 
+          caloriesLeft={caloriesLeft}
+          goal={goals.calories}
+          consumed={consumed.calories}
+        />
 
-        {/* Macro cards */}
-        <View style={styles.macroRow}>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
-            <Text style={styles.macroValue}>{proteinLeft}g</Text>
-            <Text style={styles.macroLabel}>Protein left</Text>
-          </IOSTile>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
-            <Text style={styles.macroValue}>{carbsLeft}g</Text>
-            <Text style={styles.macroLabel}>Carbs left</Text>
-          </IOSTile>
-          <IOSTile style={styles.macroCard} onPress={() => {}}>
-            <Text style={styles.macroValue}>{fatLeft}g</Text>
-            <Text style={styles.macroLabel}>Fat left</Text>
-          </IOSTile>
-        </View>
+        {/* Macro Cards */}
+        <MacroCards 
+          goals={goals}
+          consumed={consumed}
+        />
 
-        {/* Current Meal Section */}
-        <IOSTile style={styles.currentMealSection} onPress={() => {}}>
-          <View style={styles.currentMealHeader}>
-            <Text style={styles.currentMealEmoji}>{getMealEmoji(currentMeal)}</Text>
-            <View style={styles.currentMealInfo}>
-              <Text style={styles.currentMealTitle}>
-                {isCurrentMealTime(currentMeal) ? 'Current Meal' : 'Next Meal'}
-              </Text>
-              <Text style={styles.currentMealName}>{getMealDisplayName(currentMeal)}</Text>
-              <Text style={styles.currentMealTime}>{getMealTimeRange(currentMeal)}</Text>
-            </View>
-            <Text style={styles.currentMealCalories}>{getMealCalories(currentMeal)} cal</Text>
-          </View>
-          
-          {getMealItems(currentMeal).length > 0 && (
-            <View style={styles.currentMealItems}>
-              {getMealItems(currentMeal).slice(0, 3).map((item, index) => (
-                <Text key={index} style={styles.currentMealItem}>
-                  • {item.foodName} ({item.calories} cal)
-                </Text>
-              ))}
-              {getMealItems(currentMeal).length > 3 && (
-                <Text style={styles.currentMealItem}>
-                  +{getMealItems(currentMeal).length - 3} more items
-                </Text>
-              )}
-            </View>
-          )}
-        </IOSTile>
-        
         {/* Today's Summary */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Today's Summary</Text>
-          <IOSTile onPress={handleViewSavedMeals} style={styles.savedMealsButton}>
-            <Text style={styles.savedMealsButtonText}>📚 Saved Meals</Text>
-          </IOSTile>
-        </View>
-        
-        {/* Meal Overview */}
-        <View style={styles.mealsOverview}>
-          {(['breakfast', 'lunch', 'dinner', 'snacks'] as const).map((meal) => (
-            <IOSTile key={meal} style={styles.mealOverviewCard} onPress={() => {}}>
-              <Text style={styles.mealOverviewEmoji}>{getMealEmoji(meal)}</Text>
-              <Text style={styles.mealOverviewName}>{getMealDisplayName(meal)}</Text>
-              <Text style={styles.mealOverviewCalories}>{getMealCalories(meal)} cal</Text>
-              <Text style={styles.mealOverviewItems}>{getMealItems(meal).length} items</Text>
-            </IOSTile>
-          ))}
-        </View>
+        <TodaySummary 
+          meals={meals}
+          onViewSavedMeals={handleViewSavedMeals}
+        />
 
         {/* Water Intake Widget */}
         <WaterIntakeWidget />
@@ -149,179 +102,22 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
   );
 };
 
-const { width } = Dimensions.get('window');
-const macroCardWidth = (width - 32 - 16) / 3; // padding + gaps
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: '#000',
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
     paddingHorizontal: 16,
     paddingTop: 60,
+    paddingBottom: 100,
   },
   pageTitle: {
     color: '#fff',
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 24,
+    letterSpacing: -0.5,
   },
-  caloriesCard: {
-    backgroundColor: '#111',
-    borderRadius: 20,
-    padding: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-  },
-  caloriesValue: {
-    color: '#fff',
-    fontSize: 48,
-    fontWeight: '800',
-  },
-  caloriesLabel: {
-    color: '#999',
-    fontSize: 16,
-    marginTop: 4,
-  },
-  caloriesIconCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 4,
-    borderColor: '#333',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  flameIcon: {
-    fontSize: 32,
-    color: '#fff',
-  },
-  macroRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-  },
-  macroCard: {
-    width: macroCardWidth,
-    backgroundColor: '#111',
-    borderRadius: 16,
-    paddingVertical: 20,
-    alignItems: 'center',
-  },
-  macroValue: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  macroLabel: {
-    color: '#999',
-    fontSize: 14,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  sectionTitle: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  savedMealsButton: {
-    backgroundColor: '#ff6b35',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  savedMealsButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  currentMealSection: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 24,
-  },
-  currentMealHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  currentMealEmoji: {
-    fontSize: 32,
-    marginRight: 16,
-  },
-  currentMealInfo: {
-    flex: 1,
-  },
-  currentMealTitle: {
-    color: '#999',
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  currentMealName: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  currentMealTime: {
-    color: '#666',
-    fontSize: 12,
-  },
-  currentMealCalories: {
-    color: '#007AFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  currentMealItems: {
-    marginTop: 8,
-  },
-  currentMealItem: {
-    color: '#999',
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  mealsOverview: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  mealOverviewCard: {
-    backgroundColor: '#111',
-    borderRadius: 12,
-    padding: 16,
-    width: '48%',
-    marginBottom: 12,
-    alignItems: 'center',
-  },
-  mealOverviewEmoji: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
-  mealOverviewName: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  mealOverviewCalories: {
-    color: '#007AFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  mealOverviewItems: {
-    color: '#666',
-    fontSize: 12,
-  },
-}); 
+});

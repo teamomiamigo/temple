@@ -10,7 +10,6 @@ import {
     View,
 } from 'react-native';
 import { useNutritionStore } from '../stores/nutritionStore';
-import { IOSTile } from './IOSTile';
 
 interface WaterIntakeWidgetProps {
   style?: any;
@@ -42,9 +41,6 @@ export const WaterIntakeWidget: React.FC<WaterIntakeWidgetProps> = ({ style }) =
   const handleQuickAdd = (amount: number) => {
     const newAmount = currentIntake + amount;
     updateWaterIntake(newAmount);
-    
-    // Haptic feedback simulation (you can add actual haptic feedback here)
-    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
   
   const handleCustomAdd = () => {
@@ -67,17 +63,17 @@ export const WaterIntakeWidget: React.FC<WaterIntakeWidgetProps> = ({ style }) =
     return `${ml}ml`;
   };
   
-  const formatOunces = (ml: number) => {
-    const oz = Math.round(ml * 0.033814);
-    return `${oz}oz`;
-  };
-  
   return (
     <View style={[styles.container, style]}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.waterIcon}>💧</Text>
-        <Text style={styles.title}>Water Intake</Text>
+        <View style={styles.waterIconContainer}>
+          <Text style={styles.waterIcon}>💧</Text>
+        </View>
+        <View style={styles.headerText}>
+          <Text style={styles.title}>Water Intake</Text>
+          <Text style={styles.subtitle}>Stay hydrated</Text>
+        </View>
       </View>
       
       {/* Current Intake vs Goal */}
@@ -112,36 +108,36 @@ export const WaterIntakeWidget: React.FC<WaterIntakeWidgetProps> = ({ style }) =
       
       {/* Quick Add Buttons */}
       <View style={styles.quickButtonsContainer}>
-        <IOSTile
+        <TouchableOpacity
           style={styles.quickButton}
           onPress={() => handleQuickAdd(237)} // 8oz = 237ml
         >
           <Text style={styles.quickButtonEmoji}>☕</Text>
           <Text style={styles.quickButtonText}>8oz</Text>
-        </IOSTile>
+        </TouchableOpacity>
         
-        <IOSTile
+        <TouchableOpacity
           style={styles.quickButton}
           onPress={() => handleQuickAdd(710)} // 24oz = 710ml
         >
           <Text style={styles.quickButtonEmoji}>🍼</Text>
           <Text style={styles.quickButtonText}>24oz</Text>
-        </IOSTile>
+        </TouchableOpacity>
         
-        <IOSTile
+        <TouchableOpacity
           style={styles.quickButton}
           onPress={() => handleQuickAdd(500)}
         >
           <Text style={styles.quickButtonEmoji}>🥤</Text>
           <Text style={styles.quickButtonText}>500ml</Text>
-        </IOSTile>
+        </TouchableOpacity>
         
-        <IOSTile
+        <TouchableOpacity
           style={styles.customButton}
           onPress={() => setShowCustomInput(true)}
         >
           <Text style={styles.customButtonText}>+</Text>
-        </IOSTile>
+        </TouchableOpacity>
       </View>
       
       {/* Custom Input Modal */}
@@ -186,49 +182,81 @@ export const WaterIntakeWidget: React.FC<WaterIntakeWidgetProps> = ({ style }) =
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
+  },
+  waterIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   waterIcon: {
-    fontSize: 20,
-    marginRight: 8,
+    fontSize: 24,
+  },
+  headerText: {
+    flex: 1,
   },
   title: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    letterSpacing: -0.5,
+  },
+  subtitle: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 14,
+    fontWeight: '500',
   },
   intakeDisplay: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   currentAmount: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 4,
+    letterSpacing: -0.5,
   },
   remainingAmount: {
-    color: '#999',
-    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 16,
+    fontWeight: '500',
   },
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   progressBarBackground: {
     flex: 1,
     height: 8,
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: 4,
-    marginRight: 12,
+    marginRight: 16,
     overflow: 'hidden',
   },
   progressBarFill: {
@@ -238,9 +266,9 @@ const styles = StyleSheet.create({
   },
   progressPercentage: {
     color: '#007AFF',
-    fontSize: 16,
-    fontWeight: '600',
-    minWidth: 40,
+    fontSize: 18,
+    fontWeight: 'bold',
+    minWidth: 50,
     textAlign: 'right',
   },
   quickButtonsContainer: {
@@ -248,35 +276,42 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   quickButton: {
-    backgroundColor: '#222',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
     alignItems: 'center',
     flex: 1,
     marginRight: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   quickButtonEmoji: {
-    fontSize: 16,
-    marginBottom: 4,
+    fontSize: 18,
+    marginBottom: 6,
   },
   quickButtonText: {
     color: '#fff',
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   customButton: {
     backgroundColor: '#007AFF',
-    borderRadius: 12,
-    paddingVertical: 12,
+    borderRadius: 16,
+    paddingVertical: 16,
     paddingHorizontal: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 50,
+    minWidth: 60,
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   customButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   modalOverlay: {
@@ -286,28 +321,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#111',
-    borderRadius: 16,
+    backgroundColor: 'rgba(17, 17, 17, 0.95)',
+    borderRadius: 20,
     padding: 24,
     width: '80%',
     maxWidth: 300,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   modalTitle: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
     textAlign: 'center',
+    letterSpacing: -0.5,
   },
   customInput: {
-    backgroundColor: '#222',
-    borderRadius: 8,
-    padding: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 12,
+    padding: 16,
     color: '#fff',
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   modalButtons: {
     flexDirection: 'row',
@@ -315,12 +353,12 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 16,
+    borderRadius: 12,
     alignItems: 'center',
   },
   cancelButton: {
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     marginRight: 8,
   },
   addButton: {
@@ -328,13 +366,13 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   cancelButtonText: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   addButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
 });

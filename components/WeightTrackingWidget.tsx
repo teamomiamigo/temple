@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import Svg, { Circle, G, Line, Text as SvgText } from 'react-native-svg';
 import { useWeightStore } from '../stores/weightStore';
-import { IOSTile } from './IOSTile';
 
 interface WeightTrackingWidgetProps {
   style?: any;
@@ -115,14 +114,21 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
   };
   
   return (
-    <IOSTile style={[styles.container, style]} onPress={onPress}>
+    <View style={[styles.container, style]}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Weight</Text>
-          <Text style={styles.subtitle}>Last 90 days</Text>
-          <IOSTile style={styles.addButton} onPress={() => {}}>
+          <View style={styles.headerLeft}>
+            <View style={styles.weightIconContainer}>
+              <Text style={styles.weightIcon}>⚖️</Text>
+            </View>
+            <View style={styles.headerText}>
+              <Text style={styles.title}>Weight Tracking</Text>
+              <Text style={styles.subtitle}>Last 90 days</Text>
+            </View>
+          </View>
+          <View style={styles.addButton}>
             <Text style={styles.addButtonText}>+</Text>
-          </IOSTile>
+          </View>
         </View>
         
         {/* Chart */}
@@ -138,7 +144,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     x={0}
                     y={y + 4}
                     fontSize="12"
-                    fill="#666"
+                    fill="rgba(255, 255, 255, 0.6)"
                     textAnchor="start"
                   >
                     {label}
@@ -158,7 +164,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     y1={y}
                     x2={chartWidth}
                     y2={y}
-                    stroke="#333"
+                    stroke="rgba(255, 255, 255, 0.1)"
                     strokeWidth="1"
                     strokeDasharray="2,2"
                   />
@@ -174,7 +180,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                 x2={points[points.length - 1].x + 30}
                 y2={points[points.length - 1].y}
                 stroke="#4CAF50"
-                strokeWidth="2"
+                strokeWidth="3"
               />
             )}
             
@@ -184,8 +190,10 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                 key={index}
                 cx={point.x + 30}
                 cy={point.y}
-                r="3"
+                r="4"
                 fill="#4CAF50"
+                stroke="#fff"
+                strokeWidth="2"
               />
             ))}
             
@@ -199,7 +207,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     x={x}
                     y={chartHeight + 15}
                     fontSize="10"
-                    fill="#666"
+                    fill="rgba(255, 255, 255, 0.6)"
                     textAnchor="middle"
                   >
                     {label}
@@ -240,77 +248,126 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
             <Text style={styles.emptyStateSubtext}>Tap + to add your first entry</Text>
           </View>
         )}
-    </IOSTile>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  weightIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#4CAF50',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+    shadowColor: '#4CAF50',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  weightIcon: {
+    fontSize: 24,
+  },
+  headerText: {
+    flex: 1,
   },
   title: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-    flex: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 14,
-    marginRight: 12,
+    fontWeight: '500',
   },
   addButton: {
-    backgroundColor: '#333',
-    borderRadius: 8,
-    width: 32,
-    height: 32,
+    backgroundColor: '#4CAF50',
+    borderRadius: 12,
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#4CAF50',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   addButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   chartContainer: {
-    marginBottom: 16,
+    marginBottom: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 12,
+    padding: 16,
   },
   summary: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 12,
+    padding: 16,
   },
   summaryItem: {
     alignItems: 'center',
   },
   summaryLabel: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.7)',
     fontSize: 12,
     marginBottom: 4,
+    fontWeight: '500',
   },
   summaryValue: {
     color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: -0.3,
   },
   emptyState: {
     alignItems: 'center',
     paddingVertical: 20,
   },
   emptyStateText: {
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
     fontSize: 16,
     marginBottom: 4,
+    fontWeight: '500',
   },
   emptyStateSubtext: {
-    color: '#999',
+    color: 'rgba(255, 255, 255, 0.5)',
     fontSize: 14,
+    fontWeight: '500',
   },
 });
