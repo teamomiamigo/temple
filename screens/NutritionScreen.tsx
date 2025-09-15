@@ -7,7 +7,7 @@ import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
 import { useNutritionStore } from '../stores/nutritionStore';
-import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange, isCurrentMealTime } from '../utils/mealUtils';
+import { getMealByTime, getMealDisplayName, getMealEmoji, getMealTimeRange } from '../utils/mealUtils';
 
 type NutritionScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -108,20 +108,6 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
           </IOSTile>
         </View>
 
-        {/* Current Meal Corner Tile */}
-        <View style={styles.currentMealContainer}>
-          <IOSTile style={styles.currentMealTile} onPress={() => {}}>
-            <View style={styles.currentMealContent}>
-              <Text style={styles.currentMealEmoji}>{getMealEmoji(currentMeal)}</Text>
-              <View style={styles.currentMealInfo}>
-                <Text style={styles.currentMealName}>{getMealDisplayName(currentMeal)}</Text>
-                <Text style={styles.currentMealTime}>{getMealTimeRange(currentMeal)}</Text>
-                <Text style={styles.currentMealCalories}>{getMealCalories(currentMeal)} cal</Text>
-              </View>
-            </View>
-          </IOSTile>
-        </View>
-        
         {/* Today's Summary Box */}
         <View style={styles.todaySummaryContainer}>
           <View style={styles.summaryHeader}>
@@ -340,47 +326,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: '600',
-  },
-  currentMealContainer: {
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  currentMealTile: {
-    backgroundColor: '#111',
-    borderRadius: 16,
-    padding: 16,
-    width: 160,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  currentMealContent: {
-    alignItems: 'center',
-  },
-  currentMealEmoji: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
-  currentMealInfo: {
-    alignItems: 'center',
-  },
-  currentMealName: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 2,
-  },
-  currentMealTime: {
-    color: '#666',
-    fontSize: 11,
-    marginBottom: 4,
-  },
-  currentMealCalories: {
-    color: '#007AFF',
-    fontSize: 14,
-    fontWeight: 'bold',
   },
   todaySummaryContainer: {
     marginBottom: 24,
