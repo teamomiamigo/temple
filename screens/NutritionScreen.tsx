@@ -73,37 +73,37 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
           <Text style={{ color: '#999', fontSize: 16 }}>Calories Left: {caloriesLeft}</Text>
         </View>
 
-        {/* Calories Card */}
-        <CaloriesCard 
+        {/* Calories Card - Temporarily commented out */}
+        {/* <CaloriesCard
           caloriesLeft={caloriesLeft}
           goal={goals.calories}
           consumed={consumed.calories}
-        />
+        /> */}
 
-        {/* Macro Cards */}
-        <MacroCards 
+        {/* Macro Cards - Temporarily commented out */}
+        {/* <MacroCards 
           goals={goals}
           consumed={consumed}
-        />
+        /> */}
 
-        {/* Today's Summary */}
-        <TodaySummary 
+        {/* Today's Summary - Temporarily commented out */}
+        {/* <TodaySummary 
           meals={meals}
           onViewSavedMeals={handleViewSavedMeals}
-        />
+        /> */}
 
-        {/* Water Intake Widget */}
-        <WaterIntakeWidget />
+        {/* Water Intake Widget - Temporarily commented out */}
+        {/* <WaterIntakeWidget /> */}
 
-        {/* Water Intake Chart */}
-        <WaterIntakeChart />
+        {/* Water Intake Chart - Temporarily commented out */}
+        {/* <WaterIntakeChart /> */}
 
-        {/* Weight Tracking Widget */}
-        <WeightTrackingWidget onPress={handleWeightTrackingPress} />
+        {/* Weight Tracking Widget - Temporarily commented out */}
+        {/* <WeightTrackingWidget onPress={handleWeightTrackingPress} /> */}
       </ScrollView>
 
-      {/* Animated Plus Button */}
-      <AnimatedPlusButton onLogFood={handleLogFood} />
+      {/* Animated Plus Button - Temporarily commented out */}
+      {/* <AnimatedPlusButton onLogFood={handleLogFood} /> */}
     </View>
   );
 };
