@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
 import { IOSTile } from '../components/IOSTile';
 
 type MindScreenProps = {
@@ -9,6 +9,14 @@ type MindScreenProps = {
 
 export const MindScreen = ({ navigation }: MindScreenProps) => {
   const [activeTab, setActiveTab] = useState<'list' | 'calendar' | 'media' | 'map'>('list');
+  const [showJournalMenu, setShowJournalMenu] = useState(false);
+
+  const journals = [
+    { id: '1', name: 'Personal Journal', entries: 24 },
+    { id: '2', name: 'Work Reflections', entries: 12 },
+    { id: '3', name: 'Gratitude Log', entries: 8 },
+    { id: '4', name: 'Dream Journal', entries: 5 },
+  ];
 
   const journalEntries = [
     {
@@ -47,7 +55,7 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
       </View>
       
       {journalEntries.map((entry) => (
-        <TouchableOpacity key={entry.id} style={styles.entryItem}>
+        <IOSTile key={entry.id} style={styles.entryItem} onPress={() => navigation.navigate('JournalEntry')}>
           <View style={styles.entryDate}>
             <Text style={styles.entryDay}>{entry.day}</Text>
             <Text style={styles.entryDayNumber}>{entry.dayNumber}</Text>
@@ -57,7 +65,7 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
             <Text style={styles.entryPreview}>{entry.preview}</Text>
             <Text style={styles.entryTime}>{entry.time}</Text>
           </View>
-        </TouchableOpacity>
+        </IOSTile>
       ))}
     </View>
   );
@@ -158,10 +166,10 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
           <Text style={styles.menuIcon}>☰</Text>
         </IOSTile>
         
-        <View style={styles.headerTitle}>
+        <IOSTile style={styles.headerTitle} onPress={() => setShowJournalMenu(true)}>
           <Text style={styles.title}>Journal</Text>
           <Text style={styles.year}>2025</Text>
-        </View>
+        </IOSTile>
         
         <View style={styles.headerActions}>
           <IOSTile style={styles.headerButton} onPress={() => {}}>
@@ -190,6 +198,7 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
           style={[styles.tab, activeTab === 'calendar' && styles.tabActive]}
           onPress={() => setActiveTab('calendar')}
         >
+          <Text style={styles.tabIcon}>📅</Text>
           <Text style={[styles.tabText, activeTab === 'calendar' && styles.tabTextActive]}>Calendar</Text>
         </IOSTile>
         
@@ -197,6 +206,7 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
           style={[styles.tab, activeTab === 'media' && styles.tabActive]}
           onPress={() => setActiveTab('media')}
         >
+          <Text style={styles.tabIcon}>📷</Text>
           <Text style={[styles.tabText, activeTab === 'media' && styles.tabTextActive]}>Media</Text>
         </IOSTile>
         
@@ -204,6 +214,7 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
           style={[styles.tab, activeTab === 'map' && styles.tabActive]}
           onPress={() => setActiveTab('map')}
         >
+          <Text style={styles.tabIcon}>🗺️</Text>
           <Text style={[styles.tabText, activeTab === 'map' && styles.tabTextActive]}>Map</Text>
         </IOSTile>
       </View>
@@ -221,9 +232,9 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
-          <Text style={styles.bottomNavIcon}>📖</Text>
-          <Text style={styles.bottomNavLabel}>Journals</Text>
+        <IOSTile style={[styles.bottomNavItem, styles.bottomNavItemActive]} onPress={() => {}}>
+          <Text style={[styles.bottomNavIcon, styles.bottomNavIconActive]}>📖</Text>
+          <Text style={[styles.bottomNavLabel, styles.bottomNavLabelActive]}>Journals</Text>
         </IOSTile>
         
         <IOSTile 
@@ -233,12 +244,52 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
           <Text style={styles.bottomNavIcon}>❓</Text>
           <Text style={styles.bottomNavLabel}>Prompts</Text>
         </IOSTile>
-        
-        <IOSTile style={styles.bottomNavItem} onPress={() => {}}>
-          <Text style={styles.bottomNavIcon}>⋯</Text>
-          <Text style={styles.bottomNavLabel}>More</Text>
-        </IOSTile>
       </View>
+
+      {/* Journal Menu Modal */}
+      <Modal
+        visible={showJournalMenu}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowJournalMenu(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.journalMenu}>
+            <View style={styles.journalMenuHeader}>
+              <Text style={styles.journalMenuTitle}>Journals</Text>
+              <View style={styles.journalMenuActions}>
+                <IOSTile style={styles.journalMenuButton} onPress={() => {}}>
+                  <Text style={styles.journalMenuButtonText}>+</Text>
+                </IOSTile>
+                <IOSTile style={styles.journalMenuButton} onPress={() => {}}>
+                  <Text style={styles.journalMenuButtonText}>✏️</Text>
+                </IOSTile>
+                <IOSTile style={styles.journalMenuButton} onPress={() => setShowJournalMenu(false)}>
+                  <Text style={styles.journalMenuButtonText}>✕</Text>
+                </IOSTile>
+              </View>
+            </View>
+            
+            <View style={styles.journalList}>
+              {journals.map((journal) => (
+                <IOSTile key={journal.id} style={styles.journalItem} onPress={() => setShowJournalMenu(false)}>
+                  <View style={styles.journalItemContent}>
+                    <Text style={styles.journalItemName}>{journal.name}</Text>
+                    <Text style={styles.journalItemEntries}>{journal.entries} entries</Text>
+                  </View>
+                </IOSTile>
+              ))}
+            </View>
+            
+            <View style={styles.journalTrash}>
+              <IOSTile style={styles.trashButton} onPress={() => {}}>
+                <Text style={styles.trashIcon}>🗑️</Text>
+                <Text style={styles.trashText}>Trash</Text>
+              </IOSTile>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -309,13 +360,16 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     backgroundColor: '#f8f9fa',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    justifyContent: 'space-around',
   },
   tab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    marginHorizontal: 4,
   },
   tabActive: {
     borderBottomWidth: 2,
@@ -336,7 +390,7 @@ const styles = StyleSheet.create({
   },
   contentArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#111',
   },
   sectionHeader: {
     paddingHorizontal: 20,
@@ -345,14 +399,23 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   entryItem: {
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    marginHorizontal: 16,
+    marginVertical: 6,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   entryDate: {
     width: 60,
@@ -361,12 +424,12 @@ const styles = StyleSheet.create({
   },
   entryDay: {
     fontSize: 14,
-    color: '#666',
+    color: '#999',
     fontWeight: '500',
   },
   entryDayNumber: {
     fontSize: 20,
-    color: '#333',
+    color: '#fff',
     fontWeight: 'bold',
     marginTop: 2,
   },
@@ -376,12 +439,12 @@ const styles = StyleSheet.create({
   entryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
     marginBottom: 4,
   },
   entryPreview: {
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
     lineHeight: 22,
     marginBottom: 8,
   },
@@ -502,22 +565,132 @@ const styles = StyleSheet.create({
   },
   bottomNav: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 12,
+    backgroundColor: '#000',
+    paddingVertical: 16,
     paddingBottom: 34,
-    borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
   },
   bottomNavItem: {
-    flex: 1,
     alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  bottomNavItemActive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 12,
   },
   bottomNavIcon: {
     fontSize: 20,
     marginBottom: 4,
+    color: '#fff',
+  },
+  bottomNavIconActive: {
+    color: '#007AFF',
   },
   bottomNavLabel: {
     fontSize: 12,
+    color: '#999',
+    fontWeight: '500',
+  },
+  bottomNavLabelActive: {
+    color: '#007AFF',
+    fontWeight: '600',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  journalMenu: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingTop: 20,
+    paddingBottom: 34,
+    maxHeight: '80%',
+  },
+  journalMenuHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  journalMenuTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  journalMenuActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  journalMenuButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  journalMenuButtonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  journalList: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  journalItem: {
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    marginVertical: 4,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  journalItemContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  journalItemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  journalItemEntries: {
+    fontSize: 14,
+    color: '#666',
+  },
+  journalTrash: {
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+  },
+  trashButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  trashIcon: {
+    fontSize: 18,
+    marginRight: 12,
+  },
+  trashText: {
+    fontSize: 16,
+    fontWeight: '500',
     color: '#666',
   },
 });
