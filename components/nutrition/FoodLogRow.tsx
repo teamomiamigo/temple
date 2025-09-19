@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-    Platform,
-    PlatformColor,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { FoodEntry } from '../../types/nutrition';
 
@@ -104,10 +102,7 @@ export const FoodLogRow: React.FC<FoodLogRowProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 12,
     marginHorizontal: 16,
     marginVertical: 4,
@@ -141,28 +136,19 @@ const styles = StyleSheet.create({
   mealName: {
     fontSize: 12,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   foodTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
     marginBottom: 2,
   },
   foodNote: {
     fontSize: 14,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginBottom: 8,
     fontStyle: 'italic',
@@ -189,10 +175,7 @@ const styles = StyleSheet.create({
   macroChipText: {
     fontSize: 10,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   rightSide: {
@@ -206,26 +189,17 @@ const styles = StyleSheet.create({
   caloriesValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   caloriesLabel: {
     fontSize: 12,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   chevron: {
     fontSize: 16,
-    color: Platform.select({
-      ios: PlatformColor('tertiaryLabel'),
-      android: '#c7c7cc',
-    }),
+    color: getPlatformColor('tertiaryLabel'),
     fontWeight: '300',
   },
 });
