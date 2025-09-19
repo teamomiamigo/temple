@@ -14,13 +14,13 @@ import { LogSelectionScreen } from '../screens/LogSelectionScreen';
 import { MeditationPlayerScreen } from '../screens/MeditationPlayerScreen';
 import { MeditationTopicScreen } from '../screens/MeditationTopicScreen';
 import { MindScreen } from '../screens/MindScreen';
+import { NutritionDetailScreen } from '../screens/NutritionDetailScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
 import { PromptsScreen } from '../screens/PromptsScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { QuickWorkoutScreen } from '../screens/QuickWorkoutScreen';
 import { RunLoggingScreen } from '../screens/RunLoggingScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
-import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
 import { WeightTrackingScreen } from '../screens/WeightTrackingScreen';
@@ -46,6 +46,15 @@ const NutritionStackNavigator = () => {
   return (
     <NutritionStack.Navigator screenOptions={{ headerShown: false }}>
       <NutritionStack.Screen name="NutritionMain" component={NutritionScreen} />
+      <NutritionStack.Screen 
+        name="NutritionDetail" 
+        component={NutritionDetailScreen}
+        options={{
+          headerLargeTitle: true,
+          headerBackTitleVisible: false,
+          headerShadowVisible: false,
+        }}
+      />
       <NutritionStack.Screen name="UnifiedFoodLogging" component={UnifiedFoodLoggingScreen} />
       <NutritionStack.Screen name="LogSelection" component={LogSelectionScreen} />
       <NutritionStack.Screen name="LogMeal" component={LogMealScreen} />
