@@ -1,17 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type CaloriesCardProps = {
   caloriesLeft: number;
   goal: number;
   consumed: number;
+  onPress?: () => void;
 };
 
-export const CaloriesCard = ({ caloriesLeft, goal, consumed }: CaloriesCardProps) => {
+export const CaloriesCard = ({ caloriesLeft, goal, consumed, onPress }: CaloriesCardProps) => {
   const progressWidth = Math.min(100, (consumed / goal) * 100);
 
   return (
-    <View style={styles.caloriesCard}>
+    <TouchableOpacity 
+      style={styles.caloriesCard}
+      onPress={onPress}
+      activeOpacity={onPress ? 0.9 : 1}
+      disabled={!onPress}
+    >
       <View style={styles.caloriesContent}>
         <View style={styles.caloriesLeft}>
           <Text style={styles.caloriesValue}>{caloriesLeft}</Text>
@@ -27,7 +33,7 @@ export const CaloriesCard = ({ caloriesLeft, goal, consumed }: CaloriesCardProps
           <Text style={styles.caloriesGoal}>Goal: {goal}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

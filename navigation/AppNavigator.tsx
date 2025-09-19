@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { AddMealScreen } from '../screens/AddMealScreen';
 import { BodyScreen } from '../screens/BodyScreen';
 import { BuildTemplateScreen } from '../screens/BuildTemplateScreen';
@@ -14,13 +14,13 @@ import { LogSelectionScreen } from '../screens/LogSelectionScreen';
 import { MeditationPlayerScreen } from '../screens/MeditationPlayerScreen';
 import { MeditationTopicScreen } from '../screens/MeditationTopicScreen';
 import { MindScreen } from '../screens/MindScreen';
+import { NutritionDetailScreen } from '../screens/NutritionDetailScreen';
 import { NutritionScreen } from '../screens/NutritionScreen';
 import { PromptsScreen } from '../screens/PromptsScreen';
 import { QuickLogScreen } from '../screens/QuickLogScreen';
 import { QuickWorkoutScreen } from '../screens/QuickWorkoutScreen';
 import { RunLoggingScreen } from '../screens/RunLoggingScreen';
 import { SavedMealsScreen } from '../screens/SavedMealsScreen';
-import { SimpleFoodLoggingScreen } from '../screens/SimpleFoodLoggingScreen';
 import { TempleScreen } from '../screens/TempleScreen';
 import { UnifiedFoodLoggingScreen } from '../screens/UnifiedFoodLoggingScreen';
 import { WeightTrackingScreen } from '../screens/WeightTrackingScreen';
@@ -46,6 +46,15 @@ const NutritionStackNavigator = () => {
   return (
     <NutritionStack.Navigator screenOptions={{ headerShown: false }}>
       <NutritionStack.Screen name="NutritionMain" component={NutritionScreen} />
+      <NutritionStack.Screen 
+        name="NutritionDetail" 
+        component={NutritionDetailScreen}
+        options={{
+          headerLargeTitle: true,
+          headerBackTitleVisible: false,
+          headerShadowVisible: false,
+        }}
+      />
       <NutritionStack.Screen name="UnifiedFoodLogging" component={UnifiedFoodLoggingScreen} />
       <NutritionStack.Screen name="LogSelection" component={LogSelectionScreen} />
       <NutritionStack.Screen name="LogMeal" component={LogMealScreen} />
@@ -79,55 +88,65 @@ const TempleStackNavigator = () => {
 };
 
 export const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: '#000',
-            borderTopColor: '#333',
-          },
-          tabBarActiveTintColor: '#fff',
-          tabBarInactiveTintColor: '#999',
-        }}
-      >
-        <Tab.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🏠</Text>,
+  try {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: {
+              backgroundColor: '#000',
+              borderTopColor: '#333',
+            },
+            tabBarActiveTintColor: '#fff',
+            tabBarInactiveTintColor: '#999',
           }}
-        />
-        <Tab.Screen 
-          name="Nutrition" 
-          component={NutritionStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🍎</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Mind" 
-          component={MindStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🧠</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Body" 
-          component={BodyStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>💪</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Temple" 
-          component={TempleStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+        >
+          <Tab.Screen 
+            name="Home" 
+            component={HomeScreen}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🏠</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Nutrition" 
+            component={NutritionStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🍎</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Mind" 
+            component={MindStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🧠</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Body" 
+            component={BodyStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>💪</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Temple" 
+            component={TempleStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
+  } catch (error) {
+    console.error('Navigation error:', error);
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#000' }}>
+        <Text style={{ color: '#fff', fontSize: 18 }}>Navigation Error</Text>
+        <Text style={{ color: '#999', fontSize: 14, marginTop: 8 }}>{error?.toString()}</Text>
+      </View>
+    );
+  }
 }; 

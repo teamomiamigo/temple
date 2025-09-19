@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type MealSummary = {
   name: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
@@ -10,6 +10,7 @@ type MealSummary = {
 type TodaySummaryProps = {
   meals: MealSummary[];
   onViewSavedMeals: () => void;
+  onPressSummary?: () => void;
 };
 
 // Helper functions for meal display
@@ -43,9 +44,14 @@ const getMealTimeRange = (mealName: string) => {
   }
 };
 
-export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => {
+export const TodaySummary = ({ meals, onViewSavedMeals, onPressSummary }: TodaySummaryProps) => {
   return (
-    <View style={styles.todaySummaryBox}>
+    <TouchableOpacity 
+      style={styles.todaySummaryBox}
+      onPress={onPressSummary}
+      activeOpacity={onPressSummary ? 0.9 : 1}
+      disabled={!onPressSummary}
+    >
       <View style={styles.summaryHeader}>
         <Text style={styles.sectionTitle}>Today's Summary</Text>
         <View style={styles.savedMealsButton}>
@@ -76,7 +82,7 @@ export const TodaySummary = ({ meals, onViewSavedMeals }: TodaySummaryProps) => 
           </View>
         ))}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

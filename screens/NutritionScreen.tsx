@@ -62,6 +62,20 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
     navigation.navigate('WeightTracking');
   };
 
+  const handleCaloriesCardPress = () => {
+    navigation.navigate('NutritionDetail', { 
+      initialTab: 'Overview', 
+      initialPeriod: 'day' 
+    });
+  };
+
+  const handleTodaySummaryPress = () => {
+    navigation.navigate('NutritionDetail', { 
+      initialTab: 'Calories', 
+      initialPeriod: 'day' 
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -72,6 +86,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
           caloriesLeft={caloriesLeft}
           goal={goals.calories}
           consumed={consumed.calories}
+          onPress={handleCaloriesCardPress}
         />
 
         {/* Macro Cards */}
@@ -84,6 +99,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
         <TodaySummary 
           meals={meals}
           onViewSavedMeals={handleViewSavedMeals}
+          onPressSummary={handleTodaySummaryPress}
         />
 
         {/* Water Intake Widget */}
