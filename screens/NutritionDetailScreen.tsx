@@ -517,10 +517,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBlue'),
-      android: '#007AFF',
-    }),
+    backgroundColor: getPlatformColor('systemBlue'),
     borderRadius: 4,
   },
   progressText: {
