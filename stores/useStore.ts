@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Platform } from 'react-native';
 
 interface AppState {
   // User state

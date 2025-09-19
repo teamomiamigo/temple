@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { AddMealScreen } from '../screens/AddMealScreen';
 import { BodyScreen } from '../screens/BodyScreen';
 import { BuildTemplateScreen } from '../screens/BuildTemplateScreen';
@@ -88,55 +88,65 @@ const TempleStackNavigator = () => {
 };
 
 export const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: '#000',
-            borderTopColor: '#333',
-          },
-          tabBarActiveTintColor: '#fff',
-          tabBarInactiveTintColor: '#999',
-        }}
-      >
-        <Tab.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🏠</Text>,
+  try {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: {
+              backgroundColor: '#000',
+              borderTopColor: '#333',
+            },
+            tabBarActiveTintColor: '#fff',
+            tabBarInactiveTintColor: '#999',
           }}
-        />
-        <Tab.Screen 
-          name="Nutrition" 
-          component={NutritionStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🍎</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Mind" 
-          component={MindStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🧠</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Body" 
-          component={BodyStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>💪</Text>,
-          }}
-        />
-        <Tab.Screen 
-          name="Temple" 
-          component={TempleStackNavigator}
-          options={{
-            tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+        >
+          <Tab.Screen 
+            name="Home" 
+            component={HomeScreen}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🏠</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Nutrition" 
+            component={NutritionStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🍎</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Mind" 
+            component={MindStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🧠</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Body" 
+            component={BodyStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>💪</Text>,
+            }}
+          />
+          <Tab.Screen 
+            name="Temple" 
+            component={TempleStackNavigator}
+            options={{
+              tabBarIcon: () => <Text style={{ color: '#fff', fontSize: 20 }}>🕉️</Text>,
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    );
+  } catch (error) {
+    console.error('Navigation error:', error);
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#000' }}>
+        <Text style={{ color: '#fff', fontSize: 18 }}>Navigation Error</Text>
+        <Text style={{ color: '#999', fontSize: 14, marginTop: 8 }}>{error?.toString()}</Text>
+      </View>
+    );
+  }
 }; 
