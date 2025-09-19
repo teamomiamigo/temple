@@ -1,30 +1,45 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { AppNavigator } from './navigation/AppNavigator';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Temple App</Text>
-      <Text style={styles.subtitle}>Testing basic render</Text>
-    </View>
-  );
+  try {
+    return <AppNavigator />;
+  } catch (error) {
+    console.error('App render error:', error);
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>Temple App</Text>
+        <Text style={styles.errorText}>Error loading app. Check console for details.</Text>
+        <Text style={styles.errorDetails}>{error?.toString()}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  errorContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#000',
+    padding: 20,
   },
-  title: {
+  errorTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 8,
     color: '#fff',
+    marginBottom: 16,
   },
-  subtitle: {
+  errorText: {
     fontSize: 16,
     color: '#999',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  errorDetails: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
   },
 }); 
