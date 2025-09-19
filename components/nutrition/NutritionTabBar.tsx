@@ -3,12 +3,12 @@ import React, { useEffect, useRef } from 'react';
 import {
     Animated,
     Platform,
-    PlatformColor,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from 'react-native';
+import { getPlatformColor } from '../../utils/platformColors';
 
 interface NutritionTabBarProps {
   tabs: string[];
@@ -92,10 +92,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray6'),
-      android: '#f2f2f7',
-    }),
+    backgroundColor: getPlatformColor('systemGray6'),
     borderRadius: 12,
     padding: 4,
     position: 'relative',
@@ -110,27 +107,18 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   activeTabText: {
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     fontWeight: '600',
   },
   indicator: {
     position: 'absolute',
     top: 4,
     bottom: 4,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: {

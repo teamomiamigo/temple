@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import {
-    Platform,
-    PlatformColor,
     StyleSheet,
     Text,
     View,
 } from 'react-native';
 import Svg, { Circle, G, Text as SvgText } from 'react-native-svg';
+import { getPlatformColor } from '../../utils/platformColors';
 
 interface MacroPieProps {
   protein: number;
@@ -98,10 +97,7 @@ export const MacroPie: React.FC<MacroPieProps> = ({
           cx={center}
           cy={center}
           r={radius}
-          stroke={Platform.select({
-            ios: PlatformColor('systemGray5'),
-            android: '#e5e5ea',
-          })}
+          stroke={getPlatformColor('systemGray5')}
           strokeWidth={8}
           fill="none"
         />
@@ -131,10 +127,7 @@ export const MacroPie: React.FC<MacroPieProps> = ({
             fontSize="24"
             fontWeight="bold"
             textAnchor="middle"
-            fill={Platform.select({
-              ios: PlatformColor('label'),
-              android: '#000',
-            })}
+            fill={getPlatformColor('label')}
           >
             {Math.round(total)}g
           </SvgText>
@@ -143,10 +136,7 @@ export const MacroPie: React.FC<MacroPieProps> = ({
             y={center + 12}
             fontSize="12"
             textAnchor="middle"
-            fill={Platform.select({
-              ios: PlatformColor('secondaryLabel'),
-              android: '#8e8e93',
-            })}
+            fill={getPlatformColor('secondaryLabel')}
           >
             Total
           </SvgText>
@@ -187,10 +177,7 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     fontSize: 16,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   legend: {
@@ -214,18 +201,12 @@ const styles = StyleSheet.create({
   legendName: {
     fontSize: 14,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   legendValue: {
     fontSize: 12,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
 });

@@ -4,12 +4,12 @@ import * as Haptics from 'expo-haptics';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
     Platform,
-    PlatformColor,
     ScrollView,
     StyleSheet,
     Text,
     View,
 } from 'react-native';
+import { getPlatformColor } from '../utils/platformColors';
 import { FoodLogRow } from '../components/nutrition/FoodLogRow';
 import { MacroPie } from '../components/nutrition/MacroPie';
 import { NutrientProgressRow } from '../components/nutrition/NutrientProgressRow';
@@ -367,10 +367,7 @@ export const NutritionDetailScreen: React.FC<NutritionDetailScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGroupedBackground'),
-      android: '#f2f2f7',
-    }),
+    backgroundColor: getPlatformColor('systemGroupedBackground'),
   },
   tabContent: {
     flex: 1,
@@ -383,10 +380,7 @@ const styles = StyleSheet.create({
   },
   summaryTile: {
     flex: 1,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -399,18 +393,12 @@ const styles = StyleSheet.create({
   summaryValue: {
     fontSize: 28,
     fontWeight: '700',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   summaryLabel: {
     fontSize: 14,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginTop: 4,
   },
@@ -421,10 +409,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
     marginBottom: 12,
   },
@@ -434,10 +419,7 @@ const styles = StyleSheet.create({
   },
   macroItem: {
     flex: 1,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -450,18 +432,12 @@ const styles = StyleSheet.create({
   macroValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   macroLabel: {
     fontSize: 12,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginTop: 4,
   },
@@ -470,10 +446,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   chartPlaceholder: {
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 12,
     padding: 32,
     alignItems: 'center',
@@ -485,19 +458,13 @@ const styles = StyleSheet.create({
   },
   chartPlaceholderText: {
     fontSize: 18,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginBottom: 8,
   },
   chartPlaceholderSubtext: {
     fontSize: 14,
-    color: Platform.select({
-      ios: PlatformColor('tertiaryLabel'),
-      android: '#c7c7cc',
-    }),
+    color: getPlatformColor('tertiaryLabel'),
     allowFontScaling: true,
   },
   foodsSection: {
@@ -511,17 +478,11 @@ const styles = StyleSheet.create({
   viewAllText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('systemBlue'),
-      android: '#007AFF',
-    }),
+    color: getPlatformColor('systemBlue'),
     allowFontScaling: true,
   },
   primaryStatCard: {
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 16,
     padding: 24,
     margin: 16,
@@ -535,18 +496,12 @@ const styles = StyleSheet.create({
   primaryStatValue: {
     fontSize: 48,
     fontWeight: '800',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   primaryStatLabel: {
     fontSize: 16,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginBottom: 16,
   },
@@ -555,10 +510,7 @@ const styles = StyleSheet.create({
   },
   progressBarBackground: {
     height: 8,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray5'),
-      android: '#e5e5ea',
-    }),
+    backgroundColor: getPlatformColor('systemGray5'),
     borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 8,
@@ -573,10 +525,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     textAlign: 'center',
   },
@@ -593,29 +542,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray6'),
-      android: '#f2f2f7',
-    }),
+    backgroundColor: getPlatformColor('systemGray6'),
     borderRadius: 8,
     marginBottom: 8,
   },
   mealGroupName: {
     fontSize: 16,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   mealGroupCalories: {
     fontSize: 14,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   nutrientsSection: {

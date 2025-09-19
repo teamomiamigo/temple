@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-    Platform,
-    PlatformColor,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from 'react-native';
 import { NutrientRow } from '../../types/nutrition';
+import { getPlatformColor } from '../../utils/platformColors';
 
 interface NutrientProgressRowProps {
   nutrient: NutrientRow;
@@ -115,10 +114,7 @@ export const NutrientProgressRow: React.FC<NutrientProgressRowProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     borderRadius: 12,
     marginHorizontal: 16,
     marginVertical: 4,
@@ -142,19 +138,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
     marginRight: 4,
   },
   unit: {
     fontSize: 14,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   progressContainer: {
@@ -162,10 +152,7 @@ const styles = StyleSheet.create({
   },
   progressBarBackground: {
     height: 6,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray5'),
-      android: '#e5e5ea',
-    }),
+    backgroundColor: getPlatformColor('systemGray5'),
     borderRadius: 3,
     overflow: 'hidden',
   },
@@ -183,20 +170,14 @@ const styles = StyleSheet.create({
   },
   valueLabel: {
     fontSize: 12,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
     marginBottom: 2,
   },
   valueText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
   },
   overGoalText: {

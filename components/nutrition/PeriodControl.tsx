@@ -2,13 +2,13 @@ import * as Haptics from 'expo-haptics';
 import React from 'react';
 import {
     Platform,
-    PlatformColor,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from 'react-native';
 import { NutritionPeriod } from '../../types/nutrition';
+import { getPlatformColor } from '../../utils/platformColors';
 
 interface PeriodControlProps {
   period: NutritionPeriod;
@@ -115,10 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
   },
   chevronButton: {
     width: 44,
@@ -126,25 +123,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 22,
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray6'),
-      android: '#f2f2f7',
-    }),
+    backgroundColor: getPlatformColor('systemGray6'),
   },
   chevron: {
     fontSize: 20,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
   },
   periodSelector: {
     flexDirection: 'row',
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemGray6'),
-      android: '#f2f2f7',
-    }),
+    backgroundColor: getPlatformColor('systemGray6'),
     borderRadius: 8,
     padding: 2,
   },
@@ -154,10 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activePeriodButton: {
-    backgroundColor: Platform.select({
-      ios: PlatformColor('systemBackground'),
-      android: '#fff',
-    }),
+    backgroundColor: getPlatformColor('systemBackground'),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -170,17 +155,11 @@ const styles = StyleSheet.create({
   periodButtonText: {
     fontSize: 14,
     fontWeight: '500',
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
     allowFontScaling: true,
   },
   activePeriodButtonText: {
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     fontWeight: '600',
   },
   dateLabelContainer: {
@@ -192,10 +171,7 @@ const styles = StyleSheet.create({
   dateLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: Platform.select({
-      ios: PlatformColor('label'),
-      android: '#000',
-    }),
+    color: getPlatformColor('label'),
     allowFontScaling: true,
     marginRight: 4,
   },
@@ -204,10 +180,7 @@ const styles = StyleSheet.create({
   },
   caret: {
     fontSize: 12,
-    color: Platform.select({
-      ios: PlatformColor('secondaryLabel'),
-      android: '#8e8e93',
-    }),
+    color: getPlatformColor('secondaryLabel'),
   },
 });
 
