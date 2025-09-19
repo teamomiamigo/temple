@@ -1,11 +1,11 @@
 import * as Haptics from 'expo-haptics';
 import React from 'react';
 import {
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { NutritionPeriod } from '../../types/nutrition';
 import { getPlatformColor } from '../../utils/platformColors';

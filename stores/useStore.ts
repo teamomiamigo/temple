@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { Platform } from 'react-native';
 
 interface AppState {
   // User state
@@ -63,16 +64,29 @@ export const useStore = create<AppState>()(
     }),
     {
       name: 'temple-storage',
-      storage: {
+      storage: Platform.OS === 'web' ? undefined : {
         getItem: async (name) => {
-          const value = await AsyncStorage.getItem(name);
-          return value ? JSON.parse(value) : null;
+          try {
+            const value = await AsyncStorage.getItem(name);
+            return value ? JSON.parse(value) : null;
+          } catch (error) {
+            console.warn('AsyncStorage getItem error:', error);
+            return null;
+          }
         },
         setItem: async (name, value) => {
-          await AsyncStorage.setItem(name, JSON.stringify(value));
+          try {
+            await AsyncStorage.setItem(name, JSON.stringify(value));
+          } catch (error) {
+            console.warn('AsyncStorage setItem error:', error);
+          }
         },
         removeItem: async (name) => {
-          await AsyncStorage.removeItem(name);
+          try {
+            await AsyncStorage.removeItem(name);
+          } catch (error) {
+            console.warn('AsyncStorage removeItem error:', error);
+          }
         },
       },
     }

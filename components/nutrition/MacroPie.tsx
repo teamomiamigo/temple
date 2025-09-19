@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import {
-    StyleSheet,
-    Text,
-    View,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import Svg, { Circle, G, Text as SvgText } from 'react-native-svg';
 import { getPlatformColor } from '../../utils/platformColors';

@@ -3,13 +3,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import { getPlatformColor } from '../utils/platformColors';
 import { FoodLogRow } from '../components/nutrition/FoodLogRow';
 import { MacroPie } from '../components/nutrition/MacroPie';
 import { NutrientProgressRow } from '../components/nutrition/NutrientProgressRow';
@@ -17,6 +16,7 @@ import { NutritionTabBar } from '../components/nutrition/NutritionTabBar';
 import { PeriodControl } from '../components/nutrition/PeriodControl';
 import { useNutritionStore } from '../stores/nutritionStore';
 import { ChartDataPoint, FoodEntry, MealGroup, NutrientRow, NutritionDetailParams, NutritionDetailTab, NutritionPeriod } from '../types/nutrition';
+import { getPlatformColor } from '../utils/platformColors';
 
 type NutritionDetailScreenProps = {
   navigation: NativeStackNavigationProp<any>;
