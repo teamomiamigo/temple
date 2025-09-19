@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import { FoodEntry } from '../../types/nutrition';
+import { getPlatformColor } from '../../utils/platformColors';
 
 interface FoodLogRowProps {
   food: FoodEntry;
