@@ -1,6 +1,6 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type PromptsScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -214,11 +214,6 @@ export const PromptsScreen = ({ navigation }: PromptsScreenProps) => {
           <Text style={[styles.bottomNavIcon, styles.bottomNavIconActive]}>❓</Text>
           <Text style={[styles.bottomNavLabel, styles.bottomNavLabelActive]}>Prompts</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.bottomNavItem}>
-          <Text style={styles.bottomNavIcon}>⋯</Text>
-          <Text style={styles.bottomNavLabel}>More</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -229,10 +224,10 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -243,12 +238,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
     marginBottom: 20,
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: 25,
     padding: 4,
   },
@@ -260,15 +255,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabActive: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(0, 122, 255, 0.2)',
   },
   tabText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   tabTextActive: {
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
   },
   content: {
@@ -281,7 +276,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
     marginBottom: 16,
   },
   promptsScroll: {
@@ -356,14 +351,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 20,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 8,
   },
   packIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#e9ecef',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -377,16 +375,16 @@ const styles = StyleSheet.create({
   packName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#000',
+    color: '#fff',
     marginBottom: 4,
   },
   packDescription: {
     fontSize: 14,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   packArrow: {
     fontSize: 20,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: 'bold',
   },
   emptyState: {
@@ -396,12 +394,12 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
     marginBottom: 12,
   },
   emptyStateSubtitle: {
     fontSize: 16,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
@@ -419,32 +417,37 @@ const styles = StyleSheet.create({
   },
   bottomNav: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 12,
+    backgroundColor: '#000',
+    paddingVertical: 16,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    justifyContent: 'space-around',
+    paddingHorizontal: 40,
   },
   bottomNavItem: {
-    flex: 1,
     alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
   },
   bottomNavItemActive: {
     // Active state styling
   },
   bottomNavIcon: {
-    fontSize: 20,
-    marginBottom: 4,
+    fontSize: 24,
+    marginBottom: 6,
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   bottomNavIconActive: {
-    // Active icon styling
+    color: '#007AFF',
   },
   bottomNavLabel: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontWeight: '500',
   },
   bottomNavLabelActive: {
-    color: '#000',
-    fontWeight: 'bold',
+    color: '#007AFF',
+    fontWeight: '600',
   },
 });
