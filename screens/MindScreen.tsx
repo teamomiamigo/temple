@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
+import { Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IOSTile } from '../components/IOSTile';
 
 type MindScreenProps = {
@@ -56,14 +56,18 @@ export const MindScreen = ({ navigation }: MindScreenProps) => {
       
       {journalEntries.map((entry) => (
         <IOSTile key={entry.id} style={styles.entryItem} onPress={() => navigation.navigate('JournalEntry')}>
-          <View style={styles.entryDate}>
-            <Text style={styles.entryDay}>{entry.day}</Text>
-            <Text style={styles.entryDayNumber}>{entry.dayNumber}</Text>
-          </View>
           <View style={styles.entryContent}>
-            <Text style={styles.entryTitle}>{entry.title}</Text>
-            <Text style={styles.entryPreview}>{entry.preview}</Text>
-            <Text style={styles.entryTime}>{entry.time}</Text>
+            <View style={styles.entryTextContent}>
+              <Text style={styles.entryTitle}>{entry.title}</Text>
+              <Text style={styles.entryPreview} numberOfLines={2}>{entry.preview}</Text>
+            </View>
+            <View style={styles.entryDateTime}>
+              <View style={styles.entryDate}>
+                <Text style={styles.entryDay}>{entry.day}</Text>
+                <Text style={styles.entryDayNumber}>{entry.dayNumber}</Text>
+              </View>
+              <Text style={styles.entryTime}>{entry.time}</Text>
+            </View>
           </View>
         </IOSTile>
       ))}
@@ -299,17 +303,17 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   header: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#000',
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 24,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#007AFF',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -364,103 +368,116 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-    justifyContent: 'space-between',
+    paddingVertical: 20,
+    justifyContent: 'space-around',
+    gap: 8,
   },
   tab: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   tabActive: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#000',
+    backgroundColor: 'rgba(0, 122, 255, 0.2)',
+    borderColor: 'rgba(0, 122, 255, 0.3)',
   },
   tabIcon: {
-    fontSize: 18,
-    marginBottom: 6,
+    fontSize: 20,
+    marginBottom: 8,
+    color: '#fff',
   },
   tabText: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.7)',
     fontWeight: '500',
     letterSpacing: 0.3,
   },
   tabTextActive: {
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
   },
   contentArea: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    paddingTop: 8,
+    backgroundColor: '#000',
+    paddingTop: 12,
   },
   sectionHeader: {
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingVertical: 20,
+    paddingBottom: 8,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
+    letterSpacing: -0.5,
   },
   entryItem: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  entryContent: {
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    marginHorizontal: 16,
-    marginVertical: 8,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: '#f0f0f0',
+    alignItems: 'flex-start',
   },
-  entryDate: {
-    width: 60,
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  entryDay: {
-    fontSize: 14,
-    color: '#666',
-    fontWeight: '500',
-    letterSpacing: 0.5,
-  },
-  entryDayNumber: {
-    fontSize: 24,
-    color: '#333',
-    fontWeight: 'bold',
-    marginTop: 4,
-  },
-  entryContent: {
+  entryTextContent: {
     flex: 1,
+    marginRight: 16,
   },
   entryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 6,
+    color: '#fff',
+    marginBottom: 8,
     lineHeight: 24,
   },
   entryPreview: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 24,
+    fontSize: 15,
+    color: 'rgba(255, 255, 255, 0.7)',
+    lineHeight: 22,
+  },
+  entryDateTime: {
+    alignItems: 'flex-end',
+    minWidth: 80,
+  },
+  entryDate: {
+    alignItems: 'center',
     marginBottom: 8,
   },
+  entryDay: {
+    fontSize: 12,
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontWeight: '500',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  entryDayNumber: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+    marginTop: 2,
+  },
   entryTime: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.5)',
     fontWeight: '500',
   },
   calendarContainer: {
@@ -472,10 +489,14 @@ const styles = StyleSheet.create({
   calendarMonth: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   calendarGrid: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    borderRadius: 20,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   dayHeaders: {
     flexDirection: 'row',
@@ -485,7 +506,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 14,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: '500',
     paddingVertical: 8,
   },
@@ -501,7 +522,7 @@ const styles = StyleSheet.create({
   },
   calendarDayText: {
     fontSize: 16,
-    color: '#333',
+    color: '#fff',
   },
   calendarDaySelected: {
     backgroundColor: '#007AFF',
@@ -544,65 +565,67 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
     marginBottom: 12,
   },
   emptyStateSubtitle: {
     fontSize: 16,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
     lineHeight: 22,
   },
   fab: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 120,
     right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 12,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   fabIcon: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
   },
   bottomNav: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    paddingVertical: 12,
+    backgroundColor: '#000',
+    paddingVertical: 16,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
     justifyContent: 'space-around',
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
   },
   bottomNavItem: {
     alignItems: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
   },
   bottomNavItemActive: {
     // No special styling for active state in this design
   },
   bottomNavIcon: {
-    fontSize: 20,
-    marginBottom: 4,
-    color: '#666',
+    fontSize: 24,
+    marginBottom: 6,
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   bottomNavIconActive: {
     color: '#007AFF',
   },
   bottomNavLabel: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: '500',
   },
   bottomNavLabelActive: {
@@ -615,12 +638,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   journalMenu: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(17, 17, 17, 0.95)',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 20,
     paddingBottom: 34,
     maxHeight: '80%',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   journalMenuHeader: {
     flexDirection: 'row',
@@ -629,29 +654,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
   },
   journalMenuTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   journalMenuActions: {
     flexDirection: 'row',
     gap: 12,
   },
   journalMenuButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   journalMenuButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   journalList: {
     paddingHorizontal: 20,
@@ -661,10 +688,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     marginVertical: 4,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   journalItemContent: {
     flexDirection: 'row',
@@ -674,35 +701,36 @@ const styles = StyleSheet.create({
   journalItemName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
   },
   journalItemEntries: {
     fontSize: 14,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   journalTrash: {
     paddingHorizontal: 20,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
   },
   trashButton: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 16,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   trashIcon: {
     fontSize: 18,
     marginRight: 12,
+    color: '#ff6b6b',
   },
   trashText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#666',
+    color: '#ff6b6b',
   },
 });
