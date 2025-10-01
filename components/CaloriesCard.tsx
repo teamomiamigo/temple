@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors, shadows } from '../constants/theme';
 
 type CaloriesCardProps = {
   caloriesLeft: number;
@@ -39,17 +40,13 @@ export const CaloriesCard = ({ caloriesLeft, goal, consumed, onPress }: Calories
 
 const styles = StyleSheet.create({
   caloriesCard: {
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     padding: 24,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
+    borderColor: colors.glassBorder,
+    ...shadows.large,
   },
   caloriesContent: {
     flexDirection: 'row',
@@ -60,27 +57,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   caloriesValue: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 48,
     fontWeight: '800',
     marginBottom: 4,
     letterSpacing: -1,
   },
   caloriesLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 16,
     marginBottom: 16,
     fontWeight: '500',
   },
   caloriesProgress: {
     height: 6,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 3,
     overflow: 'hidden',
   },
   caloriesProgressBar: {
     height: '100%',
-    backgroundColor: '#FF6B35',
+    backgroundColor: colors.primary,
     borderRadius: 3,
   },
   caloriesRight: {
@@ -90,21 +87,17 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#FF6B35',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
-    shadowColor: '#FF6B35',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    ...shadows.medium,
   },
   caloriesIcon: {
     fontSize: 32,
   },
   caloriesGoal: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 14,
     fontWeight: '600',
   },

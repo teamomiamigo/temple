@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { colors } from './constants/theme';
 import { AppNavigator } from './navigation/AppNavigator';
 
 export default function App() {
@@ -22,24 +23,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     padding: 20,
   },
   errorTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
     marginBottom: 16,
   },
   errorText: {
     fontSize: 16,
-    color: '#999',
+    color: colors.textSecondary,
     textAlign: 'center',
     marginBottom: 16,
   },
   errorDetails: {
     fontSize: 12,
-    color: '#666',
+    color: colors.textMuted,
     textAlign: 'center',
   },
 }); 

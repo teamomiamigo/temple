@@ -2,63 +2,63 @@ import { Platform } from 'react-native';
 
 // Platform color utility that works with react-native-web
 export const PlatformColors = {
-  // System colors
+  // System colors - neutral theme
   systemBackground: Platform.select({
-    ios: Platform.OS === 'ios' ? '#ffffff' : undefined,
-    android: '#ffffff',
-    web: '#ffffff',
-    default: '#ffffff',
-  }),
-  
-  systemGroupedBackground: Platform.select({
-    ios: Platform.OS === 'ios' ? '#f2f2f7' : undefined,
-    android: '#f2f2f7',
-    web: '#f2f2f7',
-    default: '#f2f2f7',
-  }),
-  
-  systemGray5: Platform.select({
-    ios: Platform.OS === 'ios' ? '#e5e5ea' : undefined,
-    android: '#e5e5ea',
-    web: '#e5e5ea',
-    default: '#e5e5ea',
-  }),
-  
-  systemGray6: Platform.select({
-    ios: Platform.OS === 'ios' ? '#f2f2f7' : undefined,
-    android: '#f2f2f7',
-    web: '#f2f2f7',
-    default: '#f2f2f7',
-  }),
-  
-  // Text colors
-  label: Platform.select({
     ios: Platform.OS === 'ios' ? '#000000' : undefined,
     android: '#000000',
     web: '#000000',
     default: '#000000',
   }),
   
+  systemGroupedBackground: Platform.select({
+    ios: Platform.OS === 'ios' ? '#111111' : undefined,
+    android: '#111111',
+    web: '#111111',
+    default: '#111111',
+  }),
+  
+  systemGray5: Platform.select({
+    ios: Platform.OS === 'ios' ? '#333333' : undefined,
+    android: '#333333',
+    web: '#333333',
+    default: '#333333',
+  }),
+  
+  systemGray6: Platform.select({
+    ios: Platform.OS === 'ios' ? '#1A1A1A' : undefined,
+    android: '#1A1A1A',
+    web: '#1A1A1A',
+    default: '#1A1A1A',
+  }),
+  
+  // Text colors - neutral theme
+  label: Platform.select({
+    ios: Platform.OS === 'ios' ? '#FFFFFF' : undefined,
+    android: '#FFFFFF',
+    web: '#FFFFFF',
+    default: '#FFFFFF',
+  }),
+  
   secondaryLabel: Platform.select({
-    ios: Platform.OS === 'ios' ? '#8e8e93' : undefined,
-    android: '#8e8e93',
-    web: '#8e8e93',
-    default: '#8e8e93',
+    ios: Platform.OS === 'ios' ? '#CCCCCC' : undefined,
+    android: '#CCCCCC',
+    web: '#CCCCCC',
+    default: '#CCCCCC',
   }),
   
   tertiaryLabel: Platform.select({
-    ios: Platform.OS === 'ios' ? '#c7c7cc' : undefined,
-    android: '#c7c7cc',
-    web: '#c7c7cc',
-    default: '#c7c7cc',
+    ios: Platform.OS === 'ios' ? '#999999' : undefined,
+    android: '#999999',
+    web: '#999999',
+    default: '#999999',
   }),
   
-  // Accent colors
+  // Accent colors - neutral theme
   systemBlue: Platform.select({
-    ios: Platform.OS === 'ios' ? '#007AFF' : undefined,
-    android: '#007AFF',
-    web: '#007AFF',
-    default: '#007AFF',
+    ios: Platform.OS === 'ios' ? '#FFFFFF' : undefined,
+    android: '#FFFFFF',
+    web: '#FFFFFF',
+    default: '#FFFFFF',
   }),
 };
 

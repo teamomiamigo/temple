@@ -2,6 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { IOSTile } from '../components/IOSTile';
+import { colors, shadows } from '../constants/theme';
 import { Template, useTemplateStore } from '../stores/templateStore';
 
 type BodyScreenProps = {
@@ -207,11 +208,11 @@ const cardWidth = (width - 32 - 12) / 2;
 const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     paddingTop: 60,
     paddingHorizontal: 16,
     paddingBottom: 40,
@@ -220,20 +221,20 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   title: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   subtitle: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 16,
   },
   quickActionsSection: {
     marginBottom: 32,
   },
   sectionTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
@@ -244,18 +245,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   quickActionCard: {
-    backgroundColor: '#111',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 20,
     width: cardWidth,
     marginBottom: 12,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   quickActionIcon: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#222',
+    backgroundColor: colors.glassBackground,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -264,13 +268,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   quickActionTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
   },
   quickActionSubtitle: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 12,
   },
   templatesSection: {
@@ -283,34 +287,38 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   addButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
+    ...shadows.small,
   },
   addButtonText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 14,
     fontWeight: '600',
   },
   emptyState: {
-    backgroundColor: '#111',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 40,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   emptyStateEmoji: {
     fontSize: 48,
     marginBottom: 16,
   },
   emptyStateTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: '600',
     marginBottom: 8,
   },
   emptyStateSubtitle: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 24,
@@ -332,11 +340,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   templateCard: {
-    backgroundColor: '#111',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 16,
     width: cardWidth,
     marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   templateCardHeader: {
     flexDirection: 'row',
@@ -345,67 +356,72 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   templateCardText: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     fontWeight: '600',
     flex: 1,
   },
   templateBadge: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
   templateBadgeText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 12,
     fontWeight: '600',
   },
   templateCardDetails: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 14,
     marginBottom: 8,
   },
   templateCardFooter: {
     borderTopWidth: 1,
-    borderTopColor: '#222',
+    borderTopColor: colors.divider,
     paddingTop: 8,
   },
   templateCardTime: {
-    color: '#666',
+    color: colors.textMuted,
     fontSize: 12,
   },
   recentSection: {
     marginBottom: 32,
   },
   viewAllButton: {
-    backgroundColor: '#222',
+    backgroundColor: colors.backgroundTertiary,
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
   },
   viewAllButtonText: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 14,
     fontWeight: '500',
   },
   recentActivityList: {
-    backgroundColor: '#111',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 16,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   recentActivityItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#222',
+    borderBottomColor: colors.divider,
   },
   recentActivityIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#222',
+    backgroundColor: colors.glassBackground,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -417,23 +433,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   recentActivityTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 2,
   },
   recentActivitySubtitle: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 14,
   },
   recentActivityBadge: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
   recentActivityBadgeText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -445,21 +461,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   statCard: {
-    backgroundColor: '#111',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 20,
     alignItems: 'center',
     flex: 1,
     marginHorizontal: 4,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   statValue: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 4,
   },
   statLabel: {
-    color: '#999',
+    color: colors.textSecondary,
     fontSize: 12,
   },
 });

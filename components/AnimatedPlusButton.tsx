@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors, shadows } from '../constants/theme';
 
 interface AnimatedPlusButtonProps {
   onLogFood: () => void;
@@ -57,17 +58,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
+    ...shadows.large,
   },
   plusButtonTouchable: {
     width: '100%',
@@ -76,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   plusIcon: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 32,
     fontWeight: 'bold',
   },

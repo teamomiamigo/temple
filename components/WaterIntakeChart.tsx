@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { colors, shadows } from '../constants/theme';
 import { useNutritionStore } from '../stores/nutritionStore';
 
 interface WaterIntakeChartProps {
@@ -87,9 +88,9 @@ export const WaterIntakeChart: React.FC<WaterIntakeChartProps> = ({ style }) => 
   
   const getBarColor = (percentage: number, isToday: boolean) => {
     if (isToday) {
-      return percentage >= 100 ? '#34C759' : percentage >= 75 ? '#007AFF' : '#FF9500';
+      return percentage >= 100 ? colors.primary : percentage >= 75 ? colors.textSecondary : colors.textTertiary;
     }
-    return percentage >= 100 ? '#34C759' : percentage >= 75 ? '#007AFF' : '#666';
+    return percentage >= 100 ? colors.primary : percentage >= 75 ? colors.textSecondary : colors.textMuted;
   };
   
   const maxHeight = 120;
@@ -188,17 +189,13 @@ const chartItemWidth = 40;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     padding: 24,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
+    borderColor: colors.glassBorder,
+    ...shadows.large,
   },
   header: {
     flexDirection: 'row',
@@ -214,32 +211,28 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-    shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    ...shadows.medium,
   },
   chartIcon: {
     fontSize: 18,
   },
   title: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: -0.5,
   },
   timeRangeSelector: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 12,
     padding: 4,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   timeRangeButton: {
     paddingHorizontal: 16,
@@ -247,43 +240,39 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   timeRangeButtonActive: {
-    backgroundColor: '#007AFF',
-    shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 2,
+    backgroundColor: colors.primary,
+    ...shadows.small,
   },
   timeRangeButtonText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 14,
     fontWeight: '600',
   },
   timeRangeButtonTextActive: {
-    color: '#fff',
+    color: colors.background,
   },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 24,
     paddingVertical: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   statItem: {
     alignItems: 'center',
   },
   statValue: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 4,
     letterSpacing: -0.5,
   },
   statLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 12,
     fontWeight: '500',
   },
@@ -318,18 +307,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   barValueText: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 10,
     fontWeight: '600',
   },
   dateLabel: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontSize: 10,
     textAlign: 'center',
     fontWeight: '500',
   },
   todayLabel: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: 'bold',
   },
   goalLineContainer: {
@@ -340,11 +329,11 @@ const styles = StyleSheet.create({
   goalLine: {
     flex: 1,
     height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: colors.border,
     marginRight: 12,
   },
   goalLineText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 12,
     fontWeight: '500',
   },
