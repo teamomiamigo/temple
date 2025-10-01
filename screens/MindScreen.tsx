@@ -2,6 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IOSTile } from '../components/IOSTile';
+import { colors, shadows } from '../constants/theme';
 
 type MindScreenProps = {
   navigation: NativeStackNavigationProp<any>;
@@ -303,27 +304,23 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 24,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
+    ...shadows.small,
   },
   menuButton: {
     padding: 8,
   },
   menuIcon: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -332,12 +329,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 28,
     fontWeight: 'bold',
   },
   year: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     opacity: 0.8,
   },
@@ -350,25 +347,25 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   headerIcon: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 18,
   },
   profileButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#8B4513',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   profileText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 12,
     fontWeight: 'bold',
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     paddingHorizontal: 20,
     paddingVertical: 20,
     justifyContent: 'space-around',
@@ -379,33 +376,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 12,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   tabActive: {
-    backgroundColor: 'rgba(0, 122, 255, 0.2)',
-    borderColor: 'rgba(0, 122, 255, 0.3)',
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
   },
   tabIcon: {
     fontSize: 20,
     marginBottom: 8,
-    color: '#fff',
+    color: colors.text,
   },
   tabText: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontWeight: '500',
     letterSpacing: 0.3,
   },
   tabTextActive: {
-    color: '#fff',
+    color: colors.background,
     fontWeight: 'bold',
   },
   contentArea: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     paddingTop: 12,
   },
   sectionHeader: {
@@ -416,21 +413,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
     letterSpacing: -0.5,
   },
   entryItem: {
     marginHorizontal: 16,
     marginVertical: 8,
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
+    borderColor: colors.glassBorder,
+    ...shadows.large,
   },
   entryContent: {
     flexDirection: 'row',
@@ -445,13 +438,13 @@ const styles = StyleSheet.create({
   entryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
     marginBottom: 8,
     lineHeight: 24,
   },
   entryPreview: {
     fontSize: 15,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     lineHeight: 22,
   },
   entryDateTime: {
@@ -464,20 +457,20 @@ const styles = StyleSheet.create({
   },
   entryDay: {
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontWeight: '500',
     letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
   entryDayNumber: {
     fontSize: 20,
-    color: '#fff',
+    color: colors.text,
     fontWeight: 'bold',
     marginTop: 2,
   },
   entryTime: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: colors.textMuted,
     fontWeight: '500',
   },
   calendarContainer: {
@@ -489,14 +482,15 @@ const styles = StyleSheet.create({
   calendarMonth: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   calendarGrid: {
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     padding: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   dayHeaders: {
     flexDirection: 'row',
@@ -506,7 +500,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontWeight: '500',
     paddingVertical: 8,
   },
@@ -522,11 +516,11 @@ const styles = StyleSheet.create({
   },
   calendarDayText: {
     fontSize: 16,
-    color: '#fff',
+    color: colors.text,
   },
   calendarDaySelected: {
-    backgroundColor: '#007AFF',
-    color: '#fff',
+    backgroundColor: colors.primary,
+    color: colors.background,
     borderRadius: 20,
     width: 32,
     height: 32,
@@ -543,18 +537,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.glassBackground,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
   },
   filterTabActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
   },
   filterTabText: {
     fontSize: 14,
-    color: '#666',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   filterTabTextActive: {
-    color: '#fff',
+    color: colors.background,
   },
   emptyState: {
     flex: 1,
@@ -565,12 +561,12 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
     marginBottom: 12,
   },
   emptyStateSubtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textSecondary,
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -581,29 +577,25 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    elevation: 12,
+    ...shadows.large,
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   fabIcon: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 26,
     fontWeight: 'bold',
   },
   bottomNav: {
     flexDirection: 'row',
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
     paddingVertical: 16,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: colors.divider,
     justifyContent: 'space-around',
     paddingHorizontal: 40,
   },
@@ -618,18 +610,18 @@ const styles = StyleSheet.create({
   bottomNavIcon: {
     fontSize: 24,
     marginBottom: 6,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
   },
   bottomNavIconActive: {
-    color: '#007AFF',
+    color: colors.primary,
   },
   bottomNavLabel: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontWeight: '500',
   },
   bottomNavLabelActive: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '600',
   },
   modalOverlay: {
@@ -638,14 +630,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   journalMenu: {
-    backgroundColor: 'rgba(17, 17, 17, 0.95)',
+    backgroundColor: colors.backgroundSecondary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 20,
     paddingBottom: 34,
     maxHeight: '80%',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   journalMenuHeader: {
     flexDirection: 'row',
@@ -659,7 +651,7 @@ const styles = StyleSheet.create({
   journalMenuTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   journalMenuActions: {
     flexDirection: 'row',
@@ -669,16 +661,16 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: colors.glassBorder,
   },
   journalMenuButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.text,
   },
   journalList: {
     paddingHorizontal: 20,
@@ -688,10 +680,10 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     marginVertical: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   journalItemContent: {
     flexDirection: 'row',
@@ -701,11 +693,11 @@ const styles = StyleSheet.create({
   journalItemName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
+    color: colors.text,
   },
   journalItemEntries: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textSecondary,
   },
   journalTrash: {
     paddingHorizontal: 20,
@@ -718,19 +710,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: colors.glassBorder,
   },
   trashIcon: {
     fontSize: 18,
     marginRight: 12,
-    color: '#ff6b6b',
+    color: colors.textSecondary,
   },
   trashText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#ff6b6b',
+    color: colors.textSecondary,
   },
 });

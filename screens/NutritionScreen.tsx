@@ -8,6 +8,7 @@ import { TodaySummary } from '../components/TodaySummary';
 import { WaterIntakeChart } from '../components/WaterIntakeChart';
 import { WaterIntakeWidget } from '../components/WaterIntakeWidget';
 import { WeightTrackingWidget } from '../components/WeightTrackingWidget';
+import { colors } from '../constants/theme';
 import { useNutritionStore } from '../stores/nutritionStore';
 
 type NutritionScreenProps = {
@@ -121,7 +122,7 @@ export const NutritionScreen = ({ navigation }: NutritionScreenProps) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.background,
   },
   container: {
     flex: 1,
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   pageTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 24,

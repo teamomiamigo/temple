@@ -6,6 +6,7 @@ import {
     View
 } from 'react-native';
 import Svg, { Circle, G, Line, Text as SvgText } from 'react-native-svg';
+import { colors, shadows } from '../constants/theme';
 import { useWeightStore } from '../stores/weightStore';
 
 interface WeightTrackingWidgetProps {
@@ -144,7 +145,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     x={0}
                     y={y + 4}
                     fontSize="12"
-                    fill="rgba(255, 255, 255, 0.6)"
+                    fill={colors.textTertiary}
                     textAnchor="start"
                   >
                     {label}
@@ -164,7 +165,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     y1={y}
                     x2={chartWidth}
                     y2={y}
-                    stroke="rgba(255, 255, 255, 0.1)"
+                    stroke={colors.glassBackground}
                     strokeWidth="1"
                     strokeDasharray="2,2"
                   />
@@ -179,7 +180,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                 y1={points[0].y}
                 x2={points[points.length - 1].x + 30}
                 y2={points[points.length - 1].y}
-                stroke="#4CAF50"
+                stroke={colors.primary}
                 strokeWidth="3"
               />
             )}
@@ -191,8 +192,8 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                 cx={point.x + 30}
                 cy={point.y}
                 r="4"
-                fill="#4CAF50"
-                stroke="#fff"
+                fill={colors.primary}
+                stroke={colors.text}
                 strokeWidth="2"
               />
             ))}
@@ -207,7 +208,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
                     x={x}
                     y={chartHeight + 15}
                     fontSize="10"
-                    fill="rgba(255, 255, 255, 0.6)"
+                    fill={colors.textTertiary}
                     textAnchor="middle"
                   >
                     {label}
@@ -233,7 +234,7 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
               <Text style={styles.summaryLabel}>Change</Text>
               <Text style={[
                 styles.summaryValue,
-                { color: weightChange.weight >= 0 ? '#4CAF50' : '#FF5722' }
+                { color: weightChange.weight >= 0 ? colors.primary : colors.textSecondary }
               ]}>
                 {formatChange(weightChange)}
               </Text>
@@ -254,17 +255,13 @@ export const WeightTrackingWidget: React.FC<WeightTrackingWidgetProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     padding: 24,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
+    borderColor: colors.glassBorder,
+    ...shadows.large,
   },
   header: {
     flexDirection: 'row',
@@ -281,15 +278,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
-    shadowColor: '#4CAF50',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    ...shadows.medium,
   },
   weightIcon: {
     fontSize: 24,
@@ -298,45 +291,41 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 2,
     letterSpacing: -0.5,
   },
   subtitle: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 14,
     fontWeight: '500',
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     width: 40,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#4CAF50',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    ...shadows.medium,
   },
   addButtonText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 20,
     fontWeight: 'bold',
   },
   chartContainer: {
     marginBottom: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 12,
     padding: 16,
   },
   summary: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 12,
     padding: 16,
   },
@@ -344,13 +333,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   summaryLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 12,
     marginBottom: 4,
     fontWeight: '500',
   },
   summaryValue: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     fontWeight: 'bold',
     letterSpacing: -0.3,
@@ -360,13 +349,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   emptyStateText: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontSize: 16,
     marginBottom: 4,
     fontWeight: '500',
   },
   emptyStateSubtext: {
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: colors.textMuted,
     fontSize: 14,
     fontWeight: '500',
   },

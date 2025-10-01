@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { colors, shadows } from '../constants/theme';
 
 const { width } = Dimensions.get('window');
 const macroCardWidth = (width - 32 - 16) / 3; // padding + gaps
@@ -60,35 +61,31 @@ const styles = StyleSheet.create({
   },
   macroCard: {
     width: macroCardWidth,
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 16,
     padding: 16,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
+    borderColor: colors.glassBorder,
+    ...shadows.medium,
   },
   proteinCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#FF6B35',
+    borderLeftColor: colors.primary,
   },
   carbsCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#4CAF50',
+    borderLeftColor: colors.textSecondary,
   },
   fatCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#FFC107',
+    borderLeftColor: colors.textTertiary,
   },
   macroIconContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -97,14 +94,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   macroValue: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 4,
     letterSpacing: -0.5,
   },
   macroLabel: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: colors.textSecondary,
     fontSize: 12,
     marginBottom: 8,
     fontWeight: '500',
@@ -112,13 +109,13 @@ const styles = StyleSheet.create({
   macroProgress: {
     width: '100%',
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 2,
     overflow: 'hidden',
   },
   macroProgressBar: {
     height: '100%',
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 2,
   },
 });

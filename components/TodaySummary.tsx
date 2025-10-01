@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors, shadows } from '../constants/theme';
 
 type MealSummary = {
   name: 'breakfast' | 'lunch' | 'dinner' | 'snacks';
@@ -88,17 +89,13 @@ export const TodaySummary = ({ meals, onViewSavedMeals, onPressSummary }: TodayS
 
 const styles = StyleSheet.create({
   todaySummaryBox: {
-    backgroundColor: 'rgba(17, 17, 17, 0.8)',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 8,
+    borderColor: colors.glassBorder,
+    ...shadows.large,
   },
   summaryHeader: {
     flexDirection: 'row',
@@ -107,24 +104,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 24,
     fontWeight: 'bold',
     letterSpacing: -0.5,
   },
   savedMealsButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    shadowColor: '#FF6B35',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    ...shadows.medium,
   },
   savedMealsButtonText: {
-    color: '#fff',
+    color: colors.background,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -139,7 +132,7 @@ const styles = StyleSheet.create({
   },
   summarySectionBorderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    borderBottomColor: colors.divider,
   },
   summaryMealHeader: {
     flexDirection: 'row',
@@ -154,14 +147,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   summaryMealName: {
-    color: '#fff',
+    color: colors.text,
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 2,
     letterSpacing: -0.3,
   },
   summaryMealTime: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontSize: 12,
     fontWeight: '500',
   },
@@ -171,32 +164,32 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   summaryMealCalories: {
-    color: '#007AFF',
+    color: colors.primary,
     fontSize: 16,
     fontWeight: 'bold',
     marginRight: 4,
     letterSpacing: -0.3,
   },
   summaryMealCaloriesLabel: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontSize: 12,
     marginRight: 12,
     fontWeight: '500',
   },
   summaryMealItems: {
-    color: 'rgba(255, 255, 255, 0.6)',
+    color: colors.textTertiary,
     fontSize: 12,
     fontWeight: '500',
   },
   summaryMealProgress: {
     height: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: colors.glassBackground,
     borderRadius: 2,
     overflow: 'hidden',
   },
   summaryMealProgressBar: {
     height: '100%',
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.textSecondary,
     borderRadius: 2,
   },
 });
