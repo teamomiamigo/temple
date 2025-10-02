@@ -175,8 +175,37 @@ export const UnifiedFoodLoggingScreen = ({ navigation }: UnifiedFoodLoggingScree
   };
 
   const handleQuickAction = (action: string) => {
-    // Placeholder for quick actions
-    Alert.alert('Quick Action', `${action} functionality coming soon!`);
+    if (action === 'Barcode Scan') {
+      navigation.navigate('BarcodeScanner', {
+        onBarcodeScanned: handleBarcodeScanned,
+      });
+    } else {
+      // Placeholder for other quick actions
+      Alert.alert('Quick Action', `${action} functionality coming soon!`);
+    }
+  };
+
+  const handleBarcodeScanned = (barcode: string, productInfo: any) => {
+    // Convert the barcode product info to our food format
+    const foodItem = {
+      id: barcode,
+      name: productInfo.name,
+      brand: productInfo.brand,
+      calories: productInfo.calories,
+      protein: productInfo.protein,
+      carbs: productInfo.carbs,
+      fat: productInfo.fat,
+      servingSize: productInfo.servingSize,
+      servingSizeGrams: productInfo.servingSizeGrams,
+      fiber: productInfo.fiber,
+      sugar: productInfo.sugar,
+      sodium: productInfo.sodium,
+      image: productInfo.image,
+    };
+
+    // Automatically select the scanned food
+    setSelectedFood(foodItem);
+    setShowIngredientPopup(true);
   };
 
   const getTotalCalories = () => {
