@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { AddMealScreen } from '../screens/AddMealScreen';
+import { BarcodeScannerScreen } from '../screens/BarcodeScannerScreen';
 import { BodyScreen } from '../screens/BodyScreen';
 import { BuildTemplateScreen } from '../screens/BuildTemplateScreen';
 import { HomeScreen } from '../screens/HomeScreen';
@@ -56,6 +57,7 @@ const NutritionStackNavigator = () => {
         }}
       />
       <NutritionStack.Screen name="UnifiedFoodLogging" component={UnifiedFoodLoggingScreen} />
+      <NutritionStack.Screen name="BarcodeScanner" component={BarcodeScannerScreen} />
       <NutritionStack.Screen name="LogSelection" component={LogSelectionScreen} />
       <NutritionStack.Screen name="LogMeal" component={LogMealScreen} />
       <NutritionStack.Screen name="LogItem" component={LogItemScreen} />
